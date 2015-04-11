@@ -7,4 +7,8 @@ public interface Attempt {
 	public int getId();
 	
 	public double getScore();
+	
+	public void setDate();
+	
+	public Date getDate();
 }
