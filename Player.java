@@ -8,7 +8,7 @@ public interface Player {
 	/**
 	 * Sets a unique for each instance of Player.
 	 *
-	 * @parmam playerId is a unique number provided by the QuizServer.
+	 * @param playerId is a unique number provided by the QuizServer.
 	 * Ids are provided by the server to ensure uniqueness.
 	 */
 	void setPlayerId(int playerId);
