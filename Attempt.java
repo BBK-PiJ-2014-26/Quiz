@@ -9,32 +9,15 @@ import java.util.Date;
 public interface Attempt {
 	
 	/**
-	 * Sets the Id of the quiz which was attempted.
-	 */
-	void setQuizId(int quizId);
-	
-	/**
 	 * @return the QuizId for the quiz which was attempted.
 	 */
 	int getQuizId();
 	
-	/**
-	 * Sets the score recorded for this attempt.
-	 */
-	void setScore(double score);
 	
 	/**
 	 * @return the score recorded for this attempt.
 	 */
 	double getScore();
-	
-	/**
-	 * Sets the date of this attempt.
-	 *
-	 * @param date when the Quiz was attempted. 
-	 * Dates are provided by the server rather than client machine to ensure consistency.
-	 */
-	void setDate(Date date);
 	
 	/**
 	 * @return the date of the attempt.
