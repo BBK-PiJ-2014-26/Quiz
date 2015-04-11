@@ -1,3 +1,5 @@
+import java.util.Date;
+
 /**
  * An Attempt object is a record of a user's attempt at a particular quiz.
  *
@@ -9,22 +11,22 @@ public interface Attempt {
 	/**
 	 * Sets the Id of the quiz which was attempted.
 	 */
-	public void setQuizId(int quizId);
+	void setQuizId(int quizId);
 	
 	/**
 	 * @return the QuizId for the quiz which was attempted.
 	 */
-	public int getQuizId();
+	int getQuizId();
 	
 	/**
 	 * Sets the score recorded for this attempt.
 	 */
-	public void setScore(double score);
+	void setScore(double score);
 	
 	/**
 	 * @return the score recorded for this attempt.
 	 */
-	public double getScore();
+	double getScore();
 	
 	/**
 	 * Sets the date of this attempt.
@@ -32,10 +34,10 @@ public interface Attempt {
 	 * @param date when the Quiz was attempted. 
 	 * Dates are provided by the server rather than client machine to ensure consistency.
 	 */
-	public void setDate(Date date);
+	void setDate(Date date);
 	
 	/**
 	 * @return the date of the attempt.
 	 */
-	public Date getDate();
+	Date getDate();
 }
