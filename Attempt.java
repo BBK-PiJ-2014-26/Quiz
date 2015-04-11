@@ -1,14 +1,41 @@
+/**
+ * An Attempt object is a record of a user's attempt at a particular quiz.
+ *
+ * PlayerIds are not explicity recorded because the identity of the Player is implicit.
+ * Attempts are recorded within an ArrayList which is an instance variable of each Player object.
+ */
 public interface Attempt {
-
-	public void setId(int quizId);
 	
+	/**
+	 * Sets the Id of the quiz which was attempted.
+	 */
+	public void setQuizId(int quizId);
+	
+	/**
+	 * @return the QuizId for the quiz which was attempted.
+	 */
+	public int getQuizId();
+	
+	/**
+	 * Sets the score recorded for this attempt.
+	 */
 	public void setScore(double score);
 	
-	public int getId();
-	
+	/**
+	 * @return the score recorded for this attempt.
+	 */
 	public double getScore();
 	
-	public void setDate();
+	/**
+	 * Sets the date of this attempt.
+	 *
+	 * @param date when the Quiz was attempted. 
+	 * Dates are provided by the server rather than client machine to ensure consistency.
+	 */
+	public void setDate(Date date);
 	
+	/**
+	 * @return the date of the attempt.
+	 */
 	public Date getDate();
 }
