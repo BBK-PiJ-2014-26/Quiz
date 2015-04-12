@@ -2,37 +2,60 @@
  * Implements the interface Question.
  */
 public class QuestionImpl implements Question {
+	/**
+	 * An int which represents the order in which this question is asked within its parent quiz.
+	 * Cannot be negative or zero.
+	 */
 	private int order;
+	/**
+	 * The question itself.
+	 */
 	private String question;
+	/**
+	 * An array containing possible solutions to the question.
+	 * The array must contain 4 elements.
+	 */
 	private String[] possibleAnswers;
+	/**
+	 * An int which represents the solution to the question.
+	 * The int matches the index of possibleAnswers where the solution lies.
+	 */
 	private int correctAnswer;
 	
-	public QuestionImpl(String question, String[] possibleAnswers, int correctAnswer) {
-		this.question = question;
-		this.possibleAnswers = possibleAnswers;
-		this.correctAnswer = correctAnswer;
+	/**
+	 * @throws IllegalArgumentException if the length of the array is not 4.
+	 */
+	public QuestionImpl(String question, String[] possibleAnswers, int correctAnswer) throws IllegalArgumentException {
+		if (possibleAnswers.length != 4) {
+			throw new IllegalArgumentException();
+		} else {
+			this.question = question;
+			this.possibleAnswers = possibleAnswers;
+			this.correctAnswer = correctAnswer;
+		}
 	}
 	
 	public int getOrder() {
-		return 1;
+		return order;
 	}
 	
 	public String getQuestion() {
-		return "What was the capital of the Byzantine empire?";
+		return question;
 	}
 	
 	public String[] getPossibleAnswers() {
-		String[] result = new String[] {"Constantinople", "Rome", "Odessa", "Ephesus"};
-		return result;
+		return possibleAnswers;
 	}
 	
 	public int getCorrectAnswer() {
-		return 1;
+		return correctAnswer;
 	}
 	
 	public void setOrder(int order) {
 		if (order <= 0) {
 			throw new IllegalArgumentException();
+		} else {
+			this.order = order;
 		}
 	}
 }

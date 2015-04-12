@@ -88,4 +88,24 @@ public class QuestionTest {
 	public void shouldReturnCorrectAnswerInt() {
 		assertEquals(1, testQuestion.getCorrectAnswer());
 	}
+	
+	/**
+	 * Tests constructor.
+	 *
+	 * Should throw an exception when a Question is constructed 
+	 * using an array which does not have a length of 4.
+	 */
+	@Test
+	public void shouldThrowExceptionWhenArrayDoesNotEqual4() {
+		boolean exceptionThrown = false;
+		try {
+			String question = "What was the capital of the Byzantine empire?";
+			String[] possibleAnswers = new String[] {"Constantinople", "Rome", "Odessa"};
+			int correctAnswer = 1;
+			Question testQuestion2 = new QuestionImpl(question, possibleAnswers, correctAnswer);
+		} catch (IllegalArgumentException e) {
+			exceptionThrown = true;
+		}
+		assertTrue(exceptionThrown);
+	}
 }
