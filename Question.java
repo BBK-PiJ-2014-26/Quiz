@@ -22,7 +22,7 @@ public interface Question {
 	
 	/**
 	 * @return an int which identifies the correct answer from the array of possible answers.
-	 * The int represent the index of the array where the correct answer lies.
+	 * The int represents the index of the array where the correct answer lies.
 	 */
 	int getCorrectAnswer();
 }
