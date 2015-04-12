@@ -16,9 +16,9 @@ public class QuestionTest {
 	@Before
 	public void buildUp() {
 		String question = "What was the capital of the Byzantine empire?";
-		String[] possibleAnswers = new String[] {Constantinople, Rome, Odessa, Ephesus};
+		String[] possibleAnswers = new String[] {"Constantinople", "Rome", "Odessa", "Ephesus"};
 		int correctAnswer = 1;
-		testQuestion = new Question(question, possibleAnswers, correctAnswer);
+		testQuestion = new QuestionImpl(question, possibleAnswers, correctAnswer);
 	}
 	
 	/**
@@ -76,7 +76,8 @@ public class QuestionTest {
 	 */
 	@Test
 	public void shouldReturnCorrectPossibleAnswers() {
-		assertArrayEquals(possibleAnswers, testQuestion.getPossibleAnswers());
+		String[] expected = new String[] {"Constantinople", "Rome", "Odessa", "Ephesus"};
+		assertArrayEquals(expected, testQuestion.getPossibleAnswers());
 	}
 	
 	/**

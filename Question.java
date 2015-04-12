@@ -18,7 +18,7 @@ public interface Question {
 	/**
 	 * @return possibleAnswers for the quiz, the multiple choice part.
 	 */
-	String[] getPossIbleAnswers();
+	String[] getPossibleAnswers();
 	
 	/**
 	 * @return an int which identifies the correct answer from the array of possible answers.
