@@ -15,7 +15,7 @@ public interface Quiz {
 	 * @param quizId unique id provided by the QuizServer.
 	 * The server provides the id to ensure uniqueness.
 	 */
-	void seQuizId(int quizId);
+	void setQuizId(int quizId);
 	
 	/**
 	 * Sets the name of the quiz. Name does not need to be unique.
