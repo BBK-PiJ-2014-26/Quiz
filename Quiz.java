@@ -2,7 +2,7 @@
  * A Quiz object refers to each quiz created by a Player.
  *
  * It has a unique ID, a list of Questions, a name, and an author.
- * A quiz has a boolean flag to indicate if the quiz has expired or not.
+ * A quiz has a boolean flag to indicate if the quiz has terminated or not.
  * It also records either the winner if the quiz has expired 
  * or the current leader if it has not.
  */
@@ -20,16 +20,15 @@ public interface Quiz {
 	 * Sets the name of the quiz. Name does not need to be unique.
 	 *
 	 * @param name of the quiz.
+	 * @throws NullPointerException if name is null.
 	 */
-	void setName();
+	void setName(String name) throws NullPointerException;
 	
 	/**
-	 * Sets the status of the quiz to expired.
+	 * Sets the status of the quiz to terminated.
 	 *
-	 * @throws IllegalArgumentException if expiryDate is in the past.
-	 * @throws NullPointerExcpetion if expiryDate is null.
 	 */
-	void setExpired() throws NullPointerException;
+	void setTerminated();
 	
 	/**
 	 * Sets the userName of the leading Player.
