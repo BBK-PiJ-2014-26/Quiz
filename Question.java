@@ -8,7 +8,7 @@ public interface Question {
 	/**
 	 * @return the order in which this question is asked in the quiz.
 	 */
-	int getIndex();
+	int getOrder();
 	
 	/**
 	 * @return the question itself.
@@ -25,4 +25,13 @@ public interface Question {
 	 * The int represents the index of the array where the correct answer lies.
 	 */
 	int getCorrectAnswer();
+	
+	/**
+	 * Sets the order number of the question within its parent Quiz.
+	 * The order number should be assigned by the parent Quiz.
+	 * 
+	 * @param order.
+	 * @throws IllegalArgumentException if order is negative or zero.
+	 */
+	void setOrder(int order);
 }
