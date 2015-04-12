@@ -80,4 +80,18 @@ public interface QuizService extends Remote implements Serializable {
 	 * @throws IllegalArgumentException if the userName does not macth the author of the quiz.
 	 */
 	void terminateQuiz(String userName, int quizId) throws RemoteException, IllegalArgumentException;
+	
+	
+	// These methods are not accessible to the PLay Client or Setup Client.
+	
+	/**
+	 * Writes the contents of the QuizServer to disk.
+	 *
+	 */
+	private void flush();
+	
+	/**
+	 * Read the contents of the QuizServer from disk.
+	 */
+	private void read();	
 }
