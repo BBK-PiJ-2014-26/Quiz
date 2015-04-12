@@ -69,7 +69,7 @@ public interface QuizService extends Remote implements Serializable {
 	 * @return a unique quizId.
 	 * @throws IllegalArgumentException if the userNam is not registered.
 	 */
-	int addNewQuiz(List<Question> questions, String userName, String name);
+	int addNewQuiz(List<Question> questions, String userName, String name) throws RemoteException;
 	
 	/**
 	 * Terminates an active quiz. The quiz must be terminated by the author.
@@ -77,6 +77,7 @@ public interface QuizService extends Remote implements Serializable {
 	 * @param userName of the Player terminating the quiz.
 	 * @param quizId of the quiz to be terminated.
 	 * @throws IllegalArgumentException if the quizId does not exist or if the quiz has already been terminated.
+	 * @throws IllegalArgumentException if the userName does not macth the author of the quiz.
 	 */
-	void terminateQuiz(String userName, int quizId);
+	void terminateQuiz(String userName, int quizId) throws RemoteException, IllegalArgumentException;
 }
