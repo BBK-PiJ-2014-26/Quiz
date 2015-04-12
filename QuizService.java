@@ -20,5 +20,21 @@ public interface QuizService extends Remote implements Serializable {
 	 * @param userName is Player's unique id.
 	 * @param quizId of the quiz a Player wishes to play.
 	 */
-	void playQuiz(String userName, int quizId)  throws RemoteException;
+	void playQuiz(String userName, int quizId) throws RemoteException;
+	
+	/**
+	 * Registers a new Player on the QuizService.
+	 * 
+	 * @param userName is the userName submitted by the user.
+	 * userName must be unique.
+	 * @throws IllegalArgumentException if the userName is not unique.
+	 * @throws NullPointerException if the userName is null.
+	 */
+	void registerNewPlayer() throws RemoteException, IllegalArgumentException, NullPointerException;
+	
+	/**
+	 * @param userName submitted by the Player client.
+	 * @return true if the userName has not been registered.
+	 */
+	boolean isUnique(String userName) throws RemoteException;
 }
