@@ -1,9 +1,8 @@
-import java.util.Date;
-
 /**
  * A Quiz object refers to each quiz created by a Player.
  *
- * It has a unique ID, a list of Questions, a name, and an expiry date.
+ * It has a unique ID, a list of Questions, a name, and an author.
+ * A quiz has a boolean flag to indicate if the quiz has expired or not.
  * It also records either the winner if the quiz has expired 
  * or the current leader if it has not.
  */
@@ -25,23 +24,22 @@ public interface Quiz {
 	void setName();
 	
 	/**
-	 * Sets the date when the Quiz will expire.
+	 * Sets the status of the quiz to expired.
 	 *
-	 * @param expiryDate of the Quiz.
 	 * @throws IllegalArgumentException if expiryDate is in the past.
 	 * @throws NullPointerExcpetion if expiryDate is null.
 	 */
-	void setExpiryDate(Date expiryDate) throws IllegalArgumentException, NullPointerException;
+	void setExpired() throws NullPointerException;
 	
 	/**
-	 * Sets the playerId of the winning Player.
+	 * Sets the userName of the leading Player.
 	 * If the expiryDate has expired, this is the eventual Winner.
-	 * But if the expiryDate is in the future, this is the current leader.
+	 * But if the expiryDate is in the future, then this is the current leader.
 	 *
-	 * @param playerId of the winning Player.
+	 * @param userName of the winning Player.
 	 * @throws IllegalArgumentException if the Player does not exist.
 	 */
-	void setWinningPlayer(int playerId) throws IllegalArgumentException;
+	void setLeader(String userName) throws IllegalArgumentException;
 	
 	/**
 	 * Adds a new Question to the quiz.
@@ -51,4 +49,11 @@ public interface Quiz {
 	 * @param correctAnswer the index of the correct answer from possibleAnswers.
 	 */
 	void addNewQuestion(String question, String[] possibleAnswers, int correctAnswer);
+	
+	/**
+	 * Sets the author of the quiz.
+	 *
+	 * @param userName is the Player who created the quiz.
+	 */
+	void setAuthor(String userName);
 }
