@@ -55,4 +55,24 @@ public interface Quiz {
 	 * @param userName is the Player who created the quiz.
 	 */
 	void setAuthor(String userName);
+	
+	/**
+	 * @return quizId.
+	 */
+	int getQuizId();
+	
+	/**
+	 * @return name.
+	 */
+	String getName();
+	
+	/**
+	 * @return userName of leader.
+	 */
+	String getLeader();
+	
+	/**
+	 * @return list of questions/
+	 */
+	List<Question> getQuestions(); 
 }
