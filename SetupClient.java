@@ -1,7 +1,30 @@
 /**
  * A client which enables a user to setup new quizzes on a QuizService.
  *
- * In addition, a user can terminate an active and register as a new user.
+ * In addition, a user can terminate an active quiz and register as a new user.
  */
 public interface SetupClient {
+	
+	/**
+	 * An initial menu which offers two options, 
+	 * login and register new user.
+	 */
+	void welcome();
+	
+	/**
+	 * Once a user has logged in or registered, they are prompted to choose an option.
+	 * Available options are Setup New Quiz or Terminate Quiz.
+	 */
+	void chooseOption();
+	
+	/**
+	 * If a user selects Setup New Quiz, this method will collect the Quiz data.
+	 */
+	void setupNewQuiz();
+	
+	/**
+	 * If a user selects Terminate, this method terminate the quiz 
+	 * and return quiz details to the user.
+	 */
+	void terminateQuiz();
 }
