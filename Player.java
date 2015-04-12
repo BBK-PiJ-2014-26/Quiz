@@ -11,15 +11,15 @@ public interface Player {
 	/**
 	 * Sets a unique for each instance of Player.
 	 *
-	 * @param playerId is a unique number provided by the QuizServer.
-	 * Ids are provided by the server to ensure uniqueness.
+	 * @param userName is a unique String chosen by the user.
+	 * userName must be checked against the existing Players to ensure uniqueness.
 	 */
-	void setPlayerId(int playerId);
+	void setUserName(String userName);
 	
 	/**
-	 * @return the Player's playerId.
+	 * @return the Player's userName.
 	 */
-	int getId();
+	int getUserName();
 	
 	/**
 	 * Adds a new attempt to the Player's history of attempts.
