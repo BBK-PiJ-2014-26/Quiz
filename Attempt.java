@@ -13,7 +13,6 @@ public interface Attempt {
 	 */
 	String getUserName();
 	
-	
 	/**
 	 * @return the score recorded for this attempt.
 	 */

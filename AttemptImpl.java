@@ -17,9 +17,21 @@ public class AttemptImpl implements Attempt {
 	 */
 	Calendar date;
 	 
-	 public AttemptImpl(String userName, double score, Calendar date) {
+	public AttemptImpl(String userName, double score, Calendar date) {
 	 	 this.userName = userName;
 	 	 this.score = score;
 	 	 this.date = date;
-	 }
+	}
+	 
+	public String getUserName() {
+		return userName;
+	}
+	
+	public double getScore() {
+		return score;
+	}
+	
+	public Calendar getDate() {
+		return date;
+	}
 }
