@@ -1,4 +1,4 @@
-import java.util.Date;
+import java.util.Calendar;
 
 /**
  * An Attempt object is a record of a user's attempt at a particular quiz.
@@ -22,5 +22,5 @@ public interface Attempt {
 	/**
 	 * @return the date of the attempt.
 	 */
-	Date getDate();
+	Calendar getDate();
 }
