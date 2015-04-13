@@ -2,6 +2,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import java.util.GregorianCalendar;
+import java.util.Calendar;
 
 /**
  * Tests the class AttemptImpl and the interface Attempt.
@@ -40,7 +41,7 @@ public class AttemptTest {
 	 */
 	@Test
 	public void shouldReturn6() {
-		assertEquals(6.0, testAttempt.getScore());
+		assertEquals(6.0, testAttempt.getScore(), 0.0);
 	}
 	
 	/**
@@ -49,7 +50,7 @@ public class AttemptTest {
 	 * Should demonstrate that the returned value matches "Justinian".
 	 */
 	@Test
-	public void shouldReturnJustinian() {
+	public void shouldReturn10Oct2015() {
 		Calendar expected = new GregorianCalendar(2015, 10, 10, 10, 15);
 		assertEquals(expected, testAttempt.getDate());
 	}
