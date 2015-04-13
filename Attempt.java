@@ -3,15 +3,15 @@ import java.util.Date;
 /**
  * An Attempt object is a record of a user's attempt at a particular quiz.
  *
- * Player's userNames are not explicity recorded because the identity of the Player is implicit.
- * Attempts are recorded within an ArrayList which is an instance variable of each Player object.
+ * QuizIds are not explicity recorded because the identity of the Quiz is implicit.
+ * Attempts are recorded within a List which is an instance variable of each Quiz object.
  */
 public interface Attempt {
 	
 	/**
-	 * @return the QuizId for the quiz which was attempted.
+	 * @return the userName of the Player who attempted this quiz.
 	 */
-	int getQuizId();
+	String getUserName();
 	
 	
 	/**
