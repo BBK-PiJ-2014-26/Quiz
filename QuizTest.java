@@ -81,4 +81,14 @@ public class QuizTest {
 	public void shouldReturnAuthorJustinian() {
 		assertEquals("Justinian", testQuiz.getAuthor());
 	}
+	
+	/**
+	 * Tests getName().
+	 *
+	 * Should return "Justinian".
+	 */
+	@Test
+	public void shouldReturnAuthorJustinian() {
+		assertEquals("The Byzantine Quiz", testQuiz.getName());
+	}
 }
