@@ -1,10 +1,11 @@
+import java.util.Calendar;
+
 /**
  * A Quiz object refers to each quiz created by a Player.
  *
  * It has a unique ID, a list of Questions, a name, and an author.
  * A quiz has a boolean flag to indicate if the quiz has terminated or not.
- * It also records either the winner if the quiz has expired 
- * or the current leader if it has not.
+ * A leaderoard stores the scores in ascending order.
  */
 public interface Quiz {
 
@@ -67,28 +68,21 @@ public interface Quiz {
 	String getName();
 	
 	/**
-	 * @return userName of leader.
-	 */
-	String getLeader();
-	
-	/**
-	 * @return list of questions/
+	 * @return list of questions.
 	 */
 	List<Question> getQuestions(); 
-}
-
-//From Player, needs incorporating.
 
 	/**
-	 * Adds a new attempt to the Player's history of attempts.
+	 * Adds a new attempt to the Quiz's leaderboard.
 	 *
-	 * @param quizId is the quiz attempted by the player.
+	 * @param userName is the Player who attempted the quiz.
 	 * @param score that the Player scored on this attempt.
 	 * @param date which the Player attempted this quiz.
 	 */
-	void addNewAttempt(int quizId, double score, Date date);
+	void addNewAttempt(String userName, int score, Calendar date);
 	
 	/**
-	 * @return the full history of attempts made by this Player.
+	 * @return the full Leaderboard of this quiz.
 	 */
-	List<Attempt> getAllAttempts();
+	List<Attempt> getLeaderboard();
+}
