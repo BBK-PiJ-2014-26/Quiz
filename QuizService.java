@@ -75,8 +75,9 @@ public interface QuizService extends Remote implements Serializable {
 	 * @param name of the quiz.
 	 * @return a unique quizId.
 	 * @throws IllegalArgumentException if the userNam is not registered.
+	 * @throws NullPointerException if any arguments are null.
 	 */
-	int addNewQuiz(List<Question> questions, String userName, String name) throws RemoteException;
+	int addNewQuiz(List<Question> questions, String userName, String name) throws RemoteException, NullPointerException;
 	
 	/**
 	 * Terminates an active quiz. The quiz must be terminated by the author.
@@ -89,7 +90,7 @@ public interface QuizService extends Remote implements Serializable {
 	void terminateQuiz(String userName, int quizId) throws RemoteException, IllegalArgumentException;
 	
 	
-	// These methods are not accessible to the PLay Client or Setup Client.
+	// These methods are not accessible to the Play Client or Setup Client.
 	
 	/**
 	 * Writes the contents of the QuizServer to disk.
