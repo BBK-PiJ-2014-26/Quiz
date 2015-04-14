@@ -71,4 +71,14 @@ public class QuizTest {
 		Question actualQ = actualList.get(0);
 		assertEquals("Where is the Hagia Sophia?", actualQ.getQuestion());
 	}
+	
+	/**
+	 * Tests getAuthor().
+	 *
+	 * Should return "Justinian".
+	 */
+	@Test
+	public void shouldReturnAuthorJustinian() {
+		assertEquals("Justinian", testQuiz.getAuthor());
+	}
 }
