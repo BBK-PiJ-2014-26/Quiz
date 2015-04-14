@@ -19,19 +19,5 @@ public interface Player {
 	/**
 	 * @return the Player's userName.
 	 */
-	int getUserName();
-	
-	/**
-	 * Adds a new attempt to the Player's history of attempts.
-	 *
-	 * @param quizId is the quiz attempted by the player.
-	 * @param score that the Player scored on this attempt.
-	 * @param date which the Player attempted this quiz.
-	 */
-	void addNewAttempt(int quizId, double score, Date date);
-	
-	/**
-	 * @return the full history of attempts made by this Player.
-	 */
-	List<Attempt> getAllAttempts();
+	String getUserName();
 }

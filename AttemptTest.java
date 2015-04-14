@@ -18,7 +18,7 @@ public class AttemptTest {
 	@Before
 	public void buildUp() {
 		String userName = "Justinian";
-		Double score = 6.0;
+		int score = 6;
 		Calendar date = new GregorianCalendar(2015, 10, 10, 10, 15);
 		//For simplicity, creates a calendar object containing todays's date.
 		testAttempt = new AttemptImpl(userName, score, date);
@@ -37,11 +37,11 @@ public class AttemptTest {
 	/**
 	 * Tests getScore().
 	 *
-	 * Should demonstrate that the returned value matches 6.0.
+	 * Should demonstrate that the returned value matches 6.
 	 */
 	@Test
 	public void shouldReturn6() {
-		assertEquals(6.0, testAttempt.getScore(), 0.0);
+		assertEquals(6, testAttempt.getScore());
 	}
 	
 	/**

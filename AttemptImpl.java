@@ -11,13 +11,13 @@ public class AttemptImpl implements Attempt {
 	/**
 	 * The score of the player who attempted the quiz.
 	 */
-	double score;
+	int score;
 	/**
 	 * The date when a Player attempted the quiz.
 	 */
 	Calendar date;
 	 
-	public AttemptImpl(String userName, double score, Calendar date) {
+	public AttemptImpl(String userName, int score, Calendar date) {
 	 	 this.userName = userName;
 	 	 this.score = score;
 	 	 this.date = date;
@@ -27,7 +27,7 @@ public class AttemptImpl implements Attempt {
 		return userName;
 	}
 	
-	public double getScore() {
+	public int getScore() {
 		return score;
 	}
 	

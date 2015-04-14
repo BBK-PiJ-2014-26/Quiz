@@ -16,7 +16,7 @@ public interface Attempt {
 	/**
 	 * @return the score recorded for this attempt.
 	 */
-	double getScore();
+	int getScore();
 	
 	/**
 	 * @return the date of the attempt.
