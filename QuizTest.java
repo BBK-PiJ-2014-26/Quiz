@@ -91,4 +91,6 @@ public class QuizTest {
 	public void shouldReturnAuthorJustinian() {
 		assertEquals("The Byzantine Quiz", testQuiz.getName());
 	}
+	
+	//Need tests for addNewAttempt() and getLeaderboard()
 }
