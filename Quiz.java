@@ -38,11 +38,9 @@ public interface Quiz {
 	void addNewQuestion(String question, String[] possibleAnswers, int correctAnswer);
 	
 	/**
-	 * Sets the author of the quiz.
-	 *
-	 * @param userName is the Player who created the quiz.
+	 * @return the author of the quiz.
 	 */
-	void setAuthor(String userName);
+	String getAuthor();
 	
 	/**
 	 * @return quizId.
