@@ -18,28 +18,15 @@ public interface Quiz {
 	void setQuizId(int quizId);
 	
 	/**
-	 * Sets the name of the quiz. Name does not need to be unique.
-	 *
-	 * @param name of the quiz.
-	 * @throws NullPointerException if name is null.
-	 */
-	void setName(String name) throws NullPointerException;
-	
-	/**
 	 * Sets the status of the quiz to terminated.
 	 *
 	 */
-	void setTerminated();
+	void terminate();
 	
 	/**
-	 * Sets the userName of the leading Player.
-	 * If the expiryDate has expired, this is the eventual Winner.
-	 * But if the expiryDate is in the future, then this is the current leader.
-	 *
-	 * @param userName of the winning Player.
-	 * @throws IllegalArgumentException if the Player does not exist.
+	 * @return true if the quiz has been terminated.
 	 */
-	void setLeader(String userName) throws IllegalArgumentException;
+	boolean isTerminated();
 	
 	/**
 	 * Adds a new Question to the quiz.
