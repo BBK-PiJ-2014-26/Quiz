@@ -57,4 +57,18 @@ public class QuizTest {
 		testQuiz.addNewQuestion("Who founded Constantinople?", new String[] {"Valens", "Justin", "Diocletian", "Constantine"}, 4);
 		assertEquals(2, testQuiz.questions.size());
 	}
+	
+	/**
+	 * Tests getQuestions().
+	 *
+	 * Should return a List containing one question. 
+	 * Verifies that this question is expected by checking the String question within it.
+	 */
+	@Test 
+	public void shouldReturnAListContainingOneQuestion() {
+		List<Question> actualList = testQuiz.getQuestions();
+		//The list contains one question which therefore must lie at index 0.
+		Question actualQ = actualList.get(0);
+		assertEquals("Where is the Hagia Sophia?", actualQ.getQuestion());
+	}
 }
