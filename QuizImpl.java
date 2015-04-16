@@ -92,9 +92,13 @@ public class QuizImpl implements Quiz {
 		return quizId;
 	}
 
-	String getName();
+	public String getName() {
+		return name;
+	}
 	
-	List<Question> getQuestions(); 
+	public List<Question> getQuestions() {
+		return questions;
+	}
 
 	void addNewAttempt(String userName, int score, Calendar date);
 	
