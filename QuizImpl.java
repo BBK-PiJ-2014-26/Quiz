@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -50,6 +51,7 @@ public class QuizImpl implements Quiz {
 		//quizId is set to 0 initially.
 		//The QuizService controls this field to ensure uniqueness.
 		this.quizId = 0;
+		this.leaderboard = new ArrayList<Attempt>();
 	}
 		
 	public void setQuizId(int quizId) {

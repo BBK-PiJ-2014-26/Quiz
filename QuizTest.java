@@ -19,8 +19,8 @@ public class QuizTest {
 	 */
 	@Before
 	public void buildUp() {
-		List<Question> questions = ArrayList<Question>();
-		questions.add(new QuestionImpl("Where is the Hagia Sophia?", new String[] {"Constantinople", "Rome". "Athens", "Antioch"}, 1);
+		List<Question> questions = new ArrayList<Question>();
+		questions.add(new QuestionImpl("Where is the Hagia Sophia?", new String[] {"Constantinople", "Rome", "Athens", "Antioch"}, 1));
 		testQuiz =  new QuizImpl(questions, "Justinian", "The Byzantine Quiz");
 	}
 	
@@ -47,15 +47,16 @@ public class QuizTest {
 	}
 	
 	/**
-	 * Tests addNewQuestion().
+	 * Tests addNewQuestion() and getQuestions().
 	 *
 	 * testQuiz contains one question already. 
 	 * After a question has been added, the size of the List of Questions should be 2.
 	 */
 	@Test
 	public void shouldCreateQuestionListOfSize2() {
-		testQuiz.addNewQuestion("Who founded Constantinople?", new String[] {"Valens", "Justin", "Diocletian", "Constantine"}, 4);
-		assertEquals(2, testQuiz.questions.size());
+		testQuiz.addNewQuestion("Who founded Constantinople?", new String[] {"Valens", "Justin", "Diocletian", "Constantine"}, 3);
+		List<Question> actualList = testQuiz.getQuestions();
+		assertEquals(2, actualList.size());
 	}
 	
 	/**
@@ -114,7 +115,7 @@ public class QuizTest {
 	 */
 	@Test
 	public void shouldReturnEmptyLeaderboard() {
-		List<Attempt> actualLeaderboard = testQuiz.getLeaderBoard();
+		List<Attempt> actualLeaderboard = testQuiz.getLeaderboard();
 		assertTrue(actualLeaderboard.isEmpty());
 	}	
 	
