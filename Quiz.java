@@ -67,7 +67,7 @@ public interface Quiz {
 	void addNewAttempt(String userName, int score, Calendar date);
 	
 	/**
-	 * @return the full Leaderboard of this quiz.
+	 * @return the full Leaderboard of this quiz. 
 	 */
 	List<Attempt> getLeaderboard();
 }
