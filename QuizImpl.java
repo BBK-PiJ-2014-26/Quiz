@@ -53,7 +53,13 @@ public class QuizImpl implements Quiz {
 		this.terminated = true;
 	}
 
-	boolean isTerminated();
+	public boolean isTerminated() {
+		boolean result = false;
+		if (terminated) {
+			result = true;
+		}
+		return result;
+	}
 
 	void addNewQuestion(String question, String[] possibleAnswers, int correctAnswer);
 
