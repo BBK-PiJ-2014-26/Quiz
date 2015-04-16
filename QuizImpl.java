@@ -61,7 +61,28 @@ public class QuizImpl implements Quiz {
 		return result;
 	}
 
-	void addNewQuestion(String question, String[] possibleAnswers, int correctAnswer);
+	void addNewQuestion(String question, String[] possibleAnswers, int correctAnswer)
+		throws NullPointerException, IllegalArgumentException {
+			//Checks if either question or possibleAnswers is null.
+			//If either is truw, an exception is thrown.
+			if (question.equals(null) || possibleAnswers.equals(null)) {
+				throw new NullPointerException();
+			//Checks if possibleAnswers contains 4 elements.
+			//If it doesn't, an exception is thrown.
+			
+			} else if (possibleAnswers.size() != 4) {
+				throw new IllegalArgumentException();
+			//Checks if correctAnswer is less than zero or greater than 3.
+			//This is the range which corresponds with the array possibleAnswers.
+			//If it is not in this range, an exception is thrown.
+			} else if (correctAnswer > 3 || correctAnswer < 0) {
+				throw new IllegalArgumentException();
+			} else {				
+				//Creates a new Question object, 
+				//then adds it to the variable instance questions.
+				questions.add(new QuestionImpl(question, possibleAnswers, correctAnswer);
+			}
+	}
 
 	String getAuthor();
 
