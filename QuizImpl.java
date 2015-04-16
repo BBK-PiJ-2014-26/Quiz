@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Calendar;
 
 /**
  * Implements the interface Quiz.
@@ -67,7 +68,7 @@ public class QuizImpl implements Quiz {
 		return result;
 	}
 
-	void addNewQuestion(String question, String[] possibleAnswers, int correctAnswer)
+	public void addNewQuestion(String question, String[] possibleAnswers, int correctAnswer)
 		throws NullPointerException, IllegalArgumentException {
 			//Checks if either question or possibleAnswers is null.
 			//If either is truw, an exception is thrown.
@@ -76,7 +77,7 @@ public class QuizImpl implements Quiz {
 			//Checks if possibleAnswers contains 4 elements.
 			//If it doesn't, an exception is thrown.
 			
-			} else if (possibleAnswers.size() != 4) {
+			} else if (possibleAnswers.length != 4) {
 				throw new IllegalArgumentException();
 			//Checks if correctAnswer is less than zero or greater than 3.
 			//This is the range which corresponds with the array possibleAnswers.
@@ -119,7 +120,7 @@ public class QuizImpl implements Quiz {
 			} else {
 				//Creates a new Attempt object,
 				//then adds it to the leaderboard.
-				leaderboard.add(new AttemptImpl(userName, score, date);
+				leaderboard.add(new AttemptImpl(userName, score, date));
 			}
 	}
 	
