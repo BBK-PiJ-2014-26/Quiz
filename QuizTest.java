@@ -85,12 +85,37 @@ public class QuizTest {
 	/**
 	 * Tests getName().
 	 *
-	 * Should return "Justinian".
+	 * Should return "The Byzantine Quiz".
 	 */
 	@Test
-	public void shouldReturnAuthorJustinian() {
+	public void shouldReturnNameByzantineQuiz() {
 		assertEquals("The Byzantine Quiz", testQuiz.getName());
 	}
+
+	/**
+	 * Tests addNewAttempt() and getLeaderboard().
+	 *
+	 * Should add a new Attempt to the instance variable leaderBoard.
+	 * To valiidate this action worked correctly, getLeaderBoard() should 
+	 * return a List of size 1.
+	 */
+	@Test
+	public void shouldReturnLeaderboardOfSize1() {
+		//Adds a new attempt. As the list had zero attempts, the list will now have one element.
+		testQuiz.addNewAttempt("Constantine IX", 6, new GregorianCalendar(2014, 10, 10, 10, 30));
+		List<Attempt> actualLeaderboard = testQuiz.getLeaderboard();
+		assertEquals(1, actualLeaderboard.size());
+	}
 	
-	//Need tests for addNewAttempt() and getLeaderboard()
+	/**
+	 * Tests getLeaderboard().
+	 *
+	 * Should return an empty list because no attempts have been added to testQuiz.
+	 */
+	@Test
+	public void shouldReturnEmptyLeaderboard() {
+		List<Attempt> actualLeaderboard = testQuiz.getLeaderBoard();
+		assertTrue(actualLeaderboard.isEmpty());
+	}	
+	
 }
