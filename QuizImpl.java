@@ -49,7 +49,9 @@ public class QuizImpl implements Quiz {
 		this.quizId = quizId;
 	}
 	
-	void terminate();
+	public void terminate() {
+		this.terminated = true;
+	}
 
 	boolean isTerminated();
 
