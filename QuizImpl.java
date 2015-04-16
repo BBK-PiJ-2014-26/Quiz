@@ -84,9 +84,13 @@ public class QuizImpl implements Quiz {
 			}
 	}
 
-	String getAuthor();
+	public String getAuthor() {
+		return author;
+	}
 
-	int getQuizId();
+	public int getQuizId() {
+		return quizId;
+	}
 
 	String getName();
 	
