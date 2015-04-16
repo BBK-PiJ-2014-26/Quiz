@@ -27,6 +27,12 @@ public class QuizImpl implements Quiz {
 	 * The field is set by the QuizService to ensure uniqueness.
 	 */
 	private int quizId;
+	/**
+	 * A list of Attempt objects.
+	 * Organised by score.
+	 * Highest being first, lowest being last.
+	 */
+	private List<Attempt> leaderboard;
 	
 	/**
 	 * @param questions is a List of ordered question to be asked in the quiz.
@@ -80,7 +86,7 @@ public class QuizImpl implements Quiz {
 			} else {				
 				//Creates a new Question object, 
 				//then adds it to the variable instance questions.
-				questions.add(new QuestionImpl(question, possibleAnswers, correctAnswer);
+				questions.add(new QuestionImpl(question, possibleAnswers, correctAnswer));
 			}
 	}
 
@@ -100,8 +106,25 @@ public class QuizImpl implements Quiz {
 		return questions;
 	}
 
-	void addNewAttempt(String userName, int score, Calendar date);
+	public void addNewAttempt(String userName, int score, Calendar date)
+		throws NullPointerException, IllegalArgumentException {
+			//Checks to see if userName or date is null.
+			//If either is true, an excpetion is thrown.
+			if (userName.equals(null) || date.equals(null)) {
+				throw new NullPointerException();
+			//Checks to see if score is a negative number.
+			//If it is, an exception is thrown.
+			} else if (score < 0) {
+				throw new IllegalArgumentException();
+			} else {
+				//Creates a new Attempt object,
+				//then adds it to the leaderboard.
+				leaderboard.add(new AttemptImpl(userName, score, date);
+			}
+	}
 	
 
-	List<Attempt> getLeaderboard();
+	public List<Attempt> getLeaderboard() {
+		return leaderboard;
+	}
 }
