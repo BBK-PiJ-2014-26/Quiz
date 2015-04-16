@@ -35,8 +35,12 @@ public interface Quiz {
 	 * @param question is the question itself.
 	 * @param possibleAnswers the choice of answers for this Question.
 	 * @param correctAnswer the index of the correct answer from possibleAnswers.
+	 * @throws NullPointerException if question or possibleAnswers is null.
+	 * @throws IllegalArgumentException if correctAnswer is less than zero or greater than 3.
+	 * @throws IllegalArgumentException if possibleAnswers is of a size greater than 4.
 	 */
-	void addNewQuestion(String question, String[] possibleAnswers, int correctAnswer);
+	void addNewQuestion(String question, String[] possibleAnswers, int correctAnswer) 
+		throws NullPointerException, IllegalArgumentException;
 	
 	/**
 	 * @return the author of the quiz.
