@@ -119,4 +119,134 @@ public class QuizTest {
 		assertTrue(actualLeaderboard.isEmpty());
 	}	
 	
+	/**
+	 * Tests addNewQuestion().
+	 *
+	 * Should throw exception if question is null.
+	 */
+	@Test
+	public void shouldThrowExceptionIfQuestionIsNull() {
+		boolean exceptionThrown = false;
+		try {
+			testQuiz.addNewQuestion(null, new String[] {"Valens", "Justin", "Diocletian", "Constantine"}, 3);
+		} catch (Exception e) {
+			exceptionThrown = true;
+		}
+		assertTrue(exceptionThrown);
+	}
+
+	/**
+	 * Tests addNewQuestion().
+	 *
+	 * Should throw exception if possibleAnswers is null.
+	 */
+	@Test
+	public void shouldThrowExceptionIfPossibleAnswersIsNull() {
+		boolean exceptionThrown = false;
+		try {
+			testQuiz.addNewQuestion("Who founded Constantinople?", null, 3);
+		} catch (Exception e) {
+			exceptionThrown = true;
+		}
+		assertTrue(exceptionThrown);
+	}
+	
+	/**
+	 * Tests addNewQuestion().
+	 *
+	 * Should throw exception if possibleAnswers has a length of 5.
+	 */
+	@Test
+	public void shouldThrowExceptionIfPossibleAnswersIsOfLength5() {
+		boolean exceptionThrown = false;
+		try {
+			//Adds a Question object containg an array of 5 objects
+			testQuiz.addNewQuestion("Who founded Constantinople?", new String[] {"Caligula","Valens", "Justin", "Diocletian", "Constantine"}, 3);
+		} catch (Exception e) {
+			exceptionThrown = true;
+		}
+		assertTrue(exceptionThrown);
+	}
+	
+	/**
+	 * Tests addNewQuestion().
+	 *
+	 * Should throw exception if correctAnswer is -1.
+	 */
+	@Test
+	public void shouldThrowExceptionIfCorrectAnswerIsMinus1() {
+		boolean exceptionThrown = false;
+		try {
+			//Adds a Question object containg an correctAnswer of -1.
+			testQuiz.addNewQuestion("Who founded Constantinople?", new String[] {"Valens", "Justin", "Diocletian", "Constantine"}, -1);
+		} catch (Exception e) {
+			exceptionThrown = true;
+		}
+		assertTrue(exceptionThrown);
+	}
+	
+	/**
+	 * Tests addNewQuestion().
+	 *
+	 * Should throw exception if correctAnswer is 6.
+	 */
+	@Test
+	public void shouldThrowExceptionIfCorrectAnswerIs6() {
+		boolean exceptionThrown = false;
+		try {
+			//Adds a Question object containg an correctAnswer of 6.
+			testQuiz.addNewQuestion("Who founded Constantinople?", new String[] {"Valens", "Justin", "Diocletian", "Constantine"}, 6);
+		} catch (Exception e) {
+			exceptionThrown = true;
+		}
+		assertTrue(exceptionThrown);
+	}
+	
+	/**
+	 * Tests addNewAttempt().
+	 *
+	 * Should throw exception if userName is null.
+	 */
+	@Test
+	public void shouldThrowExceptionIfUserNameIsNull() {
+		boolean exceptionThrown = false;
+		try {
+			testQuiz.addNewAttempt(null, 6, new GregorianCalendar(2014, 10, 10, 10, 30));
+		} catch (Exception e) {
+			exceptionThrown = true;
+		}
+		assertTrue(exceptionThrown);
+	}
+	
+	/**
+	 * Tests addNewAttempt().
+	 *
+	 * Should throw exception if Date is null.
+	 */
+	@Test
+	public void shouldThrowExceptionIfDateIsNull() {
+		boolean exceptionThrown = false;
+		try {
+			testQuiz.addNewAttempt("Constantine IX", 6, null);
+		} catch (Exception e) {
+			exceptionThrown = true;
+		}
+		assertTrue(exceptionThrown);
+	}
+	
+	/**
+	 * Tests addNewAttempt().
+	 *
+	 * Should throw exception if score is negative.
+	 */
+	@Test
+	public void shouldThrowExceptionIfScoreIsNegative() {
+		boolean exceptionThrown = false;
+		try {
+			testQuiz.addNewAttempt("Constantine IX", -9, new GregorianCalendar(2014, 10, 10, 10, 30));
+		} catch (Exception e) {
+			exceptionThrown = true;
+		}
+		assertTrue(exceptionThrown);
+	}
 }
