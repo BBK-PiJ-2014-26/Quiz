@@ -34,7 +34,7 @@ public class QuizImpl implements Quiz {
 	 * Organised by score.
 	 * Highest being first, lowest being last.
 	 */
-	private List<Attempt> leaderboard;
+	private Leaderboard leaderboard;
 	
 	/**
 	 * @param questions is a List of ordered question to be asked in the quiz.
@@ -51,7 +51,7 @@ public class QuizImpl implements Quiz {
 		//quizId is set to 0 initially.
 		//The QuizService controls this field to ensure uniqueness.
 		this.quizId = 0;
-		this.leaderboard = new ArrayList<Attempt>();
+		this.leaderboard = new LeaderboardImpl();
 	}
 		
 	public void setQuizId(int quizId) {
@@ -127,7 +127,7 @@ public class QuizImpl implements Quiz {
 	}
 	
 
-	public List<Attempt> getLeaderboard() {
+	public Leaderboard getLeaderboard() {
 		return leaderboard;
 	}
 }

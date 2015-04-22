@@ -77,5 +77,5 @@ public interface Quiz {
 	/**
 	 * @return the full Leaderboard of this quiz. 
 	 */
-	List<Attempt> getLeaderboard();
+	Leaderboard getLeaderboard();
 }
