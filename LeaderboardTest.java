@@ -9,14 +9,14 @@ import java.util.GregorianCalendar;
 public class LeaderboardTest {
 	
 	//A Leaderboard object to be used in testing.
-	Leaderboard<Attempt> testLeaderboard;
+	LeaderboardImpl testLeaderboard;
 	
 	/**
 	 * Instantiates the testLeaderboard.
 	 */
 	@Before
 	public void buildUp() {
-		testLeaderboard = new LeaderboardImpl<Attempt>();
+		testLeaderboard = new LeaderboardImpl();
 		//Adds five attempts. All use today's date for simplicity.
 		testLeaderboard.add(new AttemptImpl("Constantius", 8, new GregorianCalendar()));
 		testLeaderboard.add(new AttemptImpl("Constantine IX", 4, new GregorianCalendar()));
@@ -48,7 +48,7 @@ public class LeaderboardTest {
 	@Test
 	public void shouldAddAttemptToEmptyLeaderboard() {
 		//Instantiates an empty Leaderboard.
-		Leaderboard<Attempt> empty = new Leaderboard<Attempt>();
+		LeaderboardImpl empty = new LeaderboardImpl();
 		empty.add(new AttemptImpl("Theodora", 12, new GregorianCalendar()));
 		assertTrue(empty.size() == 1);
 	}
