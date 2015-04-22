@@ -22,7 +22,6 @@ public class LeaderboardTest {
 		testLeaderboard.add(new AttemptImpl("Constantine IX", 4, new GregorianCalendar()));
 		testLeaderboard.add(new AttemptImpl("Valens", 2, new GregorianCalendar()));
 		testLeaderboard.add(new AttemptImpl("Basil", 6, new GregorianCalendar()));
-		testLeaderboard.add(new AttemptImpl("Justinian", 10, new GregorianCalendar()));
 	}
 	
 	/**
@@ -31,7 +30,7 @@ public class LeaderboardTest {
 	 */
 	@Test
 	public void shouldBeInScoreOrder() {
-		for (int i = 0; i < testLeaderboard.size(); i++) {
+		for (int i = 0; i < (testLeaderboard.size() - 1); i++) {
 			//Retreives two attempts from the leaderboard.
 			Attempt a1 = testLeaderboard.get(i);
 			Attempt a2 = testLeaderboard.get(i + 1);
