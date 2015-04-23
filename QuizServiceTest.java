@@ -3,6 +3,7 @@ import java.rmi.RemoteException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
+import java.util.List;
 
 /**
 * Tests the interface QuizService and the class QuizServer.
@@ -158,5 +159,29 @@ public class QuizServiceTest {
 		testService.terminateQuiz("Theodora", 1);
 		//As the quiz has  already been terminated, an exception should now been thrown.
 		testService.terminateQuiz("Theodora", 1);
+	}
+	
+	/**
+	 * Tests getAllActiveQuizzes().
+	 *
+	 * There is only 1 active quiz.
+	 * Therefore, the size of the quiz should be 1.
+	 */
+	@Test
+	public void shouldReturnAQuizListOfSize1() {
+		List<Question> temp = testService.getAllActiveQuizzes();
+		assertTrue(temp.size() == 1);
+	}
+	
+	/**
+	 * Tests getAllActiveQuizzes().
+	 *
+	 * Should return an empty list when all active quizzes are terminated.
+	 */
+	@Test
+	public void shouldReturnEmptyListWhenQuizzesHaveBeenTerminated() {
+		testService.terminateQuiz("Theodora", 1);
+		List<Question> temp = testService.getAllActiveQuizzes();
+		assertTrue(temp.isEmpty());
 	}
 }
