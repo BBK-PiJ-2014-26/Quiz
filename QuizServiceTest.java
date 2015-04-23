@@ -4,6 +4,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import java.util.List;
+import java.util.LinkedList;
 
 /**
 * Tests the interface QuizService and the class QuizServer.
@@ -20,17 +21,19 @@ public class QuizServiceTest {
 	 */
 	@Before
 	public void buildUp() {
-		testService = new QuizServer();
-		testService.registerNewPlayer("Justinian");
-		testService.registerNewPlayer("Valens");
-		testService.registerNewPlayer("Theodora");
-		//Creates a Quiz object to add to testService.
-		String[] answers = new String[] {"Edirne", "Ankara", "Istanbul", "Athens"};
-		List<Question> testList = LinkedList<Question>();
-		testList.add(new QuestionImpl("What is the modern name of Constantinople?", answers, 2));
-		Quiz testQuiz = new QuizImpl(testList, "Theodora", "The Byzantine Quiz"); 
-		//The quiz is assigned id 1.
-		addNewQuiz(testQuiz);
+		try {
+			testService = new QuizServer();
+			testService.registerNewPlayer("Justinian");
+			testService.registerNewPlayer("Valens");
+			testService.registerNewPlayer("Theodora");
+			//Creates a Quiz object to add to testService.
+			String[] answers = new String[] {"Edirne", "Ankara", "Istanbul", "Athens"};
+			List<Question> testList = new LinkedList<Question>();
+			testList.add(new QuestionImpl("What is the modern name of Constantinople?", answers, 2));
+			Quiz testQuiz = new QuizImpl(testList, "Theodora", "The Byzantine Quiz"); 
+			//The quiz is assigned id 1.
+			testService.addNewQuiz(testQuiz);
+		} catch (Exception e) {}
 	}
 	
 	/**
@@ -40,7 +43,9 @@ public class QuizServiceTest {
 	 */
 	@Test
 	public void shouldReturnTrueBecauseValensExists() {
-		assertTrue(testService.userNameExists("Valens"));
+		try {
+			assertTrue(testService.userNameExists("Valens"));
+		} catch (Exception e) {}
 	}
 
 	/**
@@ -50,7 +55,9 @@ public class QuizServiceTest {
 	 */
 	@Test
 	public void shouldReturnFalseBecauseBasilDoesntExist() {
-		assertFalse(testService.userNameExists("Basil"));
+		try {	
+			assertFalse(testService.userNameExists("Basil"));
+		} catch (Exception e) {}
 	}
 
 	/**
@@ -60,7 +67,9 @@ public class QuizServiceTest {
 	 */
 	@Test
 	public void shouldReturnFalseWhenUserNameIsNull() {
-		assertFalse(testService.userNameExists(null));
+		try {
+			assertFalse(testService.userNameExists(null));
+		} catch (Exception e) {}
 	}
 	
 	/**
@@ -70,7 +79,9 @@ public class QuizServiceTest {
 	 */
 	@Test (expected = NullPointerException.class)
 	public void shouldThrowExceptionWhenUserNameIsNull() {
-		testService.registerNewPlayer(null);
+		try {
+			testService.registerNewPlayer(null);
+		} catch (Exception e) {}
 	}
 
 	/**
@@ -80,7 +91,9 @@ public class QuizServiceTest {
 	 */
 	@Test (expected = IllegalArgumentException.class)
 	public void shouldThrowExceptionWhenUserExists() {
-		testService.registerNewPlayer("Valens");
+		try {
+			testService.registerNewPlayer("Valens");
+		} catch (Exception e) {}
 	}
 	
 	/**
@@ -90,7 +103,9 @@ public class QuizServiceTest {
 	 */
 	@Test (expected = NullPointerException.class)
 	public void shouldThrowExceptionIfQuizIsNull() {
-		testService.addNewQuiz(null);
+		try {
+			testService.addNewQuiz(null);
+		} catch (Exception e) {}
 	}
 	
 	/**
@@ -98,15 +113,17 @@ public class QuizServiceTest {
 	 *
 	 * Should throw exception if the author is not a registered Player.
 	 */
-	@Test (expected = NullPointerException.class)
-	public void shouldThrowExceptionIfQuizIsNull() {
-		//Creates a Quiz object to add to testService.
-		String[] answers = new String[] {"Byzantines", "Bulgars", "Avars", "Huns"};
-		List<Question> testList = LinkedList<Question>();
-		testList.add(new QuestionImpl("Who built the Basilica Cistern?", answers, 0));
-		//The author Basil has not been registered.
-		Quiz testQuiz = new QuizImpl(testList, "Basil", "The Byzantine Quiz 2"); 
-		addNewQuiz(testQuiz);
+	@Test (expected = IllegalArgumentException.class)
+	public void shouldThrowExceptionIfPlayerIsNotRegistered() {
+		try {
+			//Creates a Quiz object to add to testService.
+			String[] answers = new String[] {"Byzantines", "Bulgars", "Avars", "Huns"};
+			List<Question> testList = new LinkedList<Question>();
+			testList.add(new QuestionImpl("Who built the Basilica Cistern?", answers, 0));
+			//The author Basil has not been registered.
+			Quiz testQuiz = new QuizImpl(testList, "Basil", "The Byzantine Quiz 2"); 
+			testService.addNewQuiz(testQuiz);
+		} catch (Exception e) {}
 	}
 
 	/**
@@ -115,15 +132,17 @@ public class QuizServiceTest {
 	 * Should return quiz id 2..
 	 */
 	@Test (expected = NullPointerException.class)
-	public void shouldThrowExceptionIfQuizIsNull() {
-		//Creates a Quiz object to add to testService.
-		String[] answers = new String[] {"Byzantines", "Bulgars", "Avars", "Huns"};
-		List<Question> testList = LinkedList<Question>();
-		testList.add(new QuestionImpl("Who built the Basilica Cistern?", answers, 0));
-		Quiz testQuiz = new QuizImpl(testList, "Theodora", "The Byzantine Quiz 2"); 
-		//Should assign testQuiz a quizId of 2.
-		int actual = addNewQuiz(testQuiz);
-		assertEquals(2, actual);
+	public void shouldReturnQuizId2() {
+		try {
+			//Creates a Quiz object to add to testService.
+			String[] answers = new String[] {"Byzantines", "Bulgars", "Avars", "Huns"};
+			List<Question> testList = new LinkedList<Question>();
+			testList.add(new QuestionImpl("Who built the Basilica Cistern?", answers, 0));
+			Quiz testQuiz = new QuizImpl(testList, "Theodora", "The Byzantine Quiz 2"); 
+			//Should assign testQuiz a quizId of 2.
+			int actual = testService.addNewQuiz(testQuiz);
+			assertEquals(2, actual);
+		} catch (Exception e) {}
 	}
 	
 	/**
@@ -133,8 +152,10 @@ public class QuizServiceTest {
 	 */
 	@Test (expected = IllegalArgumentException.class)
 	public void shouldThrowExceptionIfQuizIdDoesntExist() {
-		//10 is not a regiestered quizId.
-		testService.terminateQuiz("Valens", 10);
+		try {
+			//10 is not a regiestered quizId.
+			testService.terminateQuiz("Valens", 10);
+		} catch (Exception e) {}
 	}
 	
 	/**
@@ -144,8 +165,10 @@ public class QuizServiceTest {
 	 */
 	@Test (expected = IllegalArgumentException.class)
 	public void shouldThrowExceptionIfUserNameDidNotAuthorQuiz() {
-		//Valens is not the author of the quizId 1.
-		testService.terminateQuiz("Valens", 1);
+		try {
+			//Valens is not the author of the quizId 1.
+			testService.terminateQuiz("Valens", 1);
+		} catch (Exception e) {}
 	}
 	
 	/**
@@ -155,10 +178,12 @@ public class QuizServiceTest {
 	 */
 	@Test (expected = IllegalArgumentException.class)
 	public void shouldThrowExceptionIfQuizHasBeenTerminated() {
-		//Terminates quizId 1.
-		testService.terminateQuiz("Theodora", 1);
-		//As the quiz has  already been terminated, an exception should now been thrown.
-		testService.terminateQuiz("Theodora", 1);
+		try {
+			//Terminates quizId 1.
+			testService.terminateQuiz("Theodora", 1);
+			//As the quiz has  already been terminated, an exception should now been thrown.
+			testService.terminateQuiz("Theodora", 1);
+		} catch (Exception e) {}
 	}
 	
 	/**
@@ -169,8 +194,10 @@ public class QuizServiceTest {
 	 */
 	@Test
 	public void shouldReturnAQuizListOfSize1() {
-		List<Question> temp = testService.getAllActiveQuizzes();
-		assertTrue(temp.size() == 1);
+		try {
+			List<Quiz> temp = testService.getAllActiveQuizzes();
+			assertTrue(temp.size() == 1);
+		} catch (Exception e) {}
 	}
 	
 	/**
@@ -180,8 +207,58 @@ public class QuizServiceTest {
 	 */
 	@Test
 	public void shouldReturnEmptyListWhenQuizzesHaveBeenTerminated() {
-		testService.terminateQuiz("Theodora", 1);
-		List<Question> temp = testService.getAllActiveQuizzes();
-		assertTrue(temp.isEmpty());
+		try {
+			testService.terminateQuiz("Theodora", 1);
+			List<Quiz> temp = testService.getAllActiveQuizzes();
+			assertTrue(temp.isEmpty());
+		} catch (Exception e) {}
+	}
+	
+	/**
+	 * Tests quizIdExists(int).
+	 *
+	 * Should return true because quizId 1 exists.
+	 */
+	@Test
+	public void shouldReturnTrueBecauseQuiz1Exists() {
+		try {
+			assertTrue(testService.quizIdExists(1));
+		} catch (Exception e) {}
+	}
+
+	/**
+	 * Tests quizIdExists(int).
+	 *
+	 * Should return false because quizId 2 does not exist.
+	 */
+	@Test
+	public void shouldReturnFalseBecauseQuiz2DoesntExist() {
+		try {	
+			assertFalse(testService.quizIdExists(2));
+		} catch (Exception e) {}
+	}
+
+	/**
+	 * Tests quizIdExists(int).
+	 *
+	 * Should throw exception when quizId is negative.
+	 */
+	@Test (expected = IllegalArgumentException.class)
+	public void shouldThrowExceptionWhenQuizIdIsNegative() {
+		try {	
+			testService.quizIdExists(-2);
+		} catch (Exception e) {}
+	}
+	
+	/**
+	 * Tests quizIdExists(int).
+	 *
+	 * Should throw exception when quizId is zero.
+	 */
+	@Test (expected = IllegalArgumentException.class)
+	public void shouldThrowExceptionWhenQuizIdIsZero() {
+		try {	
+			testService.quizIdExists(0);
+		} catch (Exception e) {}
 	}
 }
