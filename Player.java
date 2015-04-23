@@ -9,14 +9,6 @@ import java.util.Date;
 public interface Player {
 	
 	/**
-	 * Sets a unique for each instance of Player.
-	 *
-	 * @param userName is a unique String chosen by the user.
-	 * userName must be checked against the existing Players to ensure uniqueness.
-	 */
-	void setUserName(String userName);
-	
-	/**
 	 * @return the Player's userName.
 	 */
 	String getUserName();

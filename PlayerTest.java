@@ -10,14 +10,13 @@ public class PlayerTest {
 	//A Player object for use in testing.
 	
 	/**
-	 * Tests setUserName() and getUserName().
+	 * Tests getUserName().
 	 *
 	 * Should return Justinian.
 	 */
 	@Test
 	public void shouldReturnJustinian() {
-		testPlayer = new PlayerImpl();
-		testPlayer.setUserName("Justinian");
+		testPlayer = new PlayerImpl("Justinian");
 		assertEquals("Justinian", testPlayer.getUserName());
 	}
 }

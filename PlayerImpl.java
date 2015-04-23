@@ -6,8 +6,11 @@ public class PlayerImpl implements Player {
 	 * The Player's userName which must be unique.
 	 */
 	String userName;
-
-	public void setUserName(String userName) {
+	
+	/**
+	 * @param userName must be unique.
+	 */
+	public PlayerImpl(String userName) {
 		this.userName = userName;
 	}
 	
