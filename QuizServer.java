@@ -3,6 +3,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 import java.util.LinkedList;
+import java.util.ListIterator;
 
 /**
  * Implements the interface QuizService.
@@ -102,7 +103,86 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
 	}
 	
 	public void terminateQuiz(String userName, int quizId) 
-		throws RemoteException, IllegalArgumentException {}
+		throws RemoteException, IllegalArgumentException {
+			//Checks whether quizId exists.
+			//If false, an exception is thrown
+			if (!quizIdExists(quizId)) {
+				throw new IllegalArgumentException();
+			} else {
+				//Creates an iterator to search the list.
+				ListIterator<Quiz> iterator = quizzes.listIterator(0);
+				boolean finished = false;
+				while (!finished) {
+					if (iterator.hasNext()) {
+						Quiz temp = iterator.next();
+						if (temp.getQuizId() == quizId) {
+							//Checks whether userName matches temp's author.
+							//If false, an exception is thrown.
+							if (!userName.equals(temp.getAuthor())) {
+								throw new IllegalArgumentException();
+							}
+							iterator.remove();
+							temp.terminate();
+							quizzes.add(temp);
+							finished = true;
+						}
+					} else {
+						finished = true;
+					}
+				}
+			}
+	}
+	
+	/**
+	 * A method which retreives a Quiz object from quizzes.
+	 * Has private access because a client does need to retreive a quiz.
+	 *
+	 * @param quizId is the unique id which identifies the desired Quiz.
+	 * @return the desired Quiz.
+	 */
+	private Quiz getQuiz(int quizId) {
+		Quiz result = null;
+		//Creates an iterator to search the list.
+		ListIterator<Quiz> iterator = quizzes.listIterator(0);
+		boolean finished = false;
+		while (!finished) {
+			if (iterator.hasNext()) {
+				Quiz temp = iterator.next();
+				if (temp.getQuizId() == quizId) {
+					result = temp;
+					finished = true;
+				}
+			} else {
+				finished = true;
+			}
+		}
+		return result;
+	}
+	
+	public boolean quizIdExists(int quizId) throws RemoteException, IllegalArgumentException {
+		//Check whether quizId is 0 or negative.
+		//If true, an exception is thrown.
+		if (quizId <= 0) {
+			throw new IllegalArgumentException();
+		} else {
+			boolean result = false;
+			//Creates an iterator to search the list.
+			ListIterator<Quiz> iterator = quizzes.listIterator(0);
+			boolean finished = false;
+			while (!finished) {
+				if (iterator.hasNext()) {
+					Quiz temp = iterator.next();
+					if (temp.getQuizId() == quizId) {
+						result = true;
+						finished = true;
+					}
+				} else {
+					finished = true;
+				}
+			}
+			return result;
+		}
+	}
 		
 	//private void flush() {}
 	
