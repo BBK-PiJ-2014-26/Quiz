@@ -1,10 +1,11 @@
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 
 /**
 * A service to allow users to either setup new quizzes or play existing quizzes.
 */
-public interface QuizService extends Remote implements Serializable {
+public interface QuizService extends Remote {
 
 	//Methods below are designed for use on either the Setup Client or the Player Client
 	
@@ -89,10 +90,10 @@ public interface QuizService extends Remote implements Serializable {
 	 * Writes the contents of the QuizServer to disk.
 	 *
 	 */
-	private void flush();
+	//private void flush();
 	
 	/**
 	 * Read the contents of the QuizServer from disk.
 	 */
-	private void read();	
+	//private void read();	
 }
