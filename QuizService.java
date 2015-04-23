@@ -13,24 +13,19 @@ public interface QuizService extends Remote implements Serializable {
 	 * 
 	 * @param userName is the userName submitted by the user.
 	 * userName must be unique.
-	 * @throws IllegalArgumentException if the userName is not unique.
+	 * @throws IllegalArgumentException if the userName already exists.
 	 * @throws NullPointerException if the userName is null.
 	 */
 	void registerNewPlayer(String userName) throws RemoteException, IllegalArgumentException, NullPointerException;
 	
 	/**
 	 * Takes a userName submitted by a Client and confirms that it is registered on the QuizService.
+	 * If the userName argument is null, false is returned.
 	 *
-	 * @return true if the userName is registered.
-	 */
-	boolean userNameExist() throws RemoteException;
-	
-	/**
 	 * @param userName submitted by the Player client.
-	 * @return true if the userName has not been registered.
-	 * @throws NullPointerException if the userName is null.
+	 * @return true if the userName has been registered.
 	 */
-	boolean isUnique(String userName) throws RemoteException, NullPointerException;
+	boolean userNameExists(String userName) throws RemoteException;
 	
 	
 	//The following methods are designed for use by the Player Client.
@@ -39,7 +34,7 @@ public interface QuizService extends Remote implements Serializable {
 	 * Sends a list of quizzes to a Player client so that a Player can choose a quiz to play.
 	 *
 	 * @return a list of all active quizzes.
-	 * An active quiz is one which has not exceeded its expiryDate.
+	 * An active quiz is one which has not been terminated.
 	 */
 	List<Quiz> getAllActiveQuizzes() throws RemoteException;
 	
@@ -62,7 +57,7 @@ public interface QuizService extends Remote implements Serializable {
 	 * @param score which the Player record for this quiz.
 	 * @throws IllegalArgumentException if either quizId or userName does not exist.
 	 */
-	void addNewAttempt(int quizId, String userName, double score) throws RemoteException, IllegalArgumentException;	 
+	void addNewAttempt(int quizId, String userName, int score) throws RemoteException, IllegalArgumentException;	 
 	
 	
 	//These methods are designed for use with the Setup Client.
@@ -70,14 +65,12 @@ public interface QuizService extends Remote implements Serializable {
 	/**
 	 * Registers a new quiz on the QuizService.
 	 *
-	 * @param questions is a list of questions submitted by the user.
-	 * @param userName is the author of the quiz.
-	 * @param name of the quiz.
+	 * @param quiz is the Quiz the user wishes to add to the QuizService.
 	 * @return a unique quizId.
-	 * @throws IllegalArgumentException if the userNam is not registered.
-	 * @throws NullPointerException if any arguments are null.
+	 * @throws IllegalArgumentException if the author is not a registered Player.
+	 * @throws NullPointerException if quiz is null.
 	 */
-	int addNewQuiz(List<Question> questions, String userName, String name) throws RemoteException, NullPointerException;
+	int addNewQuiz(Quiz quiz) throws RemoteException, IllegalArgumentException, NullPointerException;
 	
 	/**
 	 * Terminates an active quiz. The quiz must be terminated by the author.
