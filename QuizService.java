@@ -28,6 +28,14 @@ public interface QuizService extends Remote {
 	 */
 	boolean userNameExists(String userName) throws RemoteException;
 	
+	/**
+	 * Takes a quizId and confirms that it is registered on the QuizService.
+	 *
+	 * @param quizId to be checked.
+	 * @return true if the quizId exists.
+	 * @throws IllegalArgumentException if quizId is 0 or negative.
+	 */
+	public boolean quizIdExists(int quizId) throws RemoteException, IllegalArgumentException;
 	
 	//The following methods are designed for use by the Player Client.
 	
