@@ -59,14 +59,32 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
 	}
 	
 	public List<Quiz> getAllActiveQuizzes() throws RemoteException {
-		return new LinkedList<Quiz>();
+		List<Quiz> result = new LinkedList<Quiz>();
+		ListIterator<Quiz> iterator = quizzes.listIterator(0);
+		while (iterator.hasNext()) {
+			Quiz temp = iterator.next();
+			//Checks whether the current Quiz has been terminated.
+			if (temp.isTerminated()) {
+				result.add(temp);
+			}
+		}
+		return result;
 	}
 	
-	public List<Question> playQuiz(String userName, int quizId) throws RemoteException {
-		return new LinkedList<Question>();
+	public List<Question> playQuiz(String userName, int quizId) 
+		throws RemoteException, IllegalArgumentException {
+			//Checks that userName and quizId exist on this QuizService.
+			//If either is false, an exception is thrown.
+			if (!userNameExists(userName) || !quizIdExists(quizId)) {
+				throw new IllegalArgumentException();
+			} else {
+				Quiz temp = getQuiz(quizId);
+				List<Question> result = temp.getQuestions();
+				return result;
+			}
 	}
 	
-	public void addNewAttempt(int quizId, String userName, int score) 
+	public void addNewAttempt(Attempt attempt) 
 		throws RemoteException, IllegalArgumentException {}
 		
 	public int addNewQuiz(Quiz quiz) 
