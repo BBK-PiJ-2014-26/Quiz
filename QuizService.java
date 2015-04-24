@@ -1,6 +1,7 @@
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
+import java.util.Calendar;
 
 /**
 * A service to allow users to either setup new quizzes or play existing quizzes.
@@ -52,21 +53,22 @@ public interface QuizService extends Remote {
 	 *
 	 * @param userName is Player's unique id.
 	 * @param quizId of the quiz a Player wishes to play.
-	 * @return the list of questions for the PLayer's chosen quiz.
+	 * @return the list of questions for the Player's chosen quiz.
 	 */
-	List<Question> playQuiz(String userName, int quizId) throws RemoteException;
+	List<Question> playQuiz(String userName, int quizId) throws RemoteException, IllegalArgumentException;
 		
 	/**
 	 * Once a Player has complted a quiz, this method adds a new Attempt.
 	 * Moreover, if the Player has the new highest score, 
 	 * the quiz's leader field is updated.
 	 *
-	 * @param quizId of the quiz the Player has completed.
-	 * @param userName uniquely identifies the Player.
-	 * @param score which the Player record for this quiz.
-	 * @throws IllegalArgumentException if either quizId or userName does not exist.
+	 * @param userName of the quiz the Player has completed.
+	 * @param score that the player recorded.
+	 * @param date the Attempt was made.
+	 * @param quizId of the Quiz which was attempted.
+	 * @throws IllegalArgumentException if the quizId does not exist.
 	 */
-	void addNewAttempt(int quizId, String userName, int score) throws RemoteException, IllegalArgumentException;	 
+	void addNewAttempt(String userName, int score, Calendar date, int quizId) throws RemoteException, IllegalArgumentException;	 
 	
 	
 	//These methods are designed for use with the Setup Client.

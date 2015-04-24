@@ -3,8 +3,10 @@ import java.rmi.RemoteException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
+import org.junit.After;
 import java.util.List;
 import java.util.LinkedList;
+import java.util.GregorianCalendar;
 
 /**
 * Tests the interface QuizService and the class QuizServer.
@@ -34,6 +36,11 @@ public class QuizServiceTest {
 			//The quiz is assigned id 1.
 			testService.addNewQuiz(testQuiz);
 		} catch (Exception e) {}
+	}
+	
+	@After
+	public void cleanUp() {
+		testService = null;
 	}
 	
 	/**
@@ -297,6 +304,18 @@ public class QuizServiceTest {
 		try {
 			List<Question> test = testService.playQuiz("Theodora", 1);
 			assertEquals(1, test.size());
+		} catch (Exception e) {}
+	}
+	
+	/**
+	 * Tests addNewAttempt().
+	 *
+	 * Should throw eexception because quizId 6 does not exist.
+	 */
+	@Test (expected = IllegalArgumentException.class)
+	public void shouldThrowExceptionBecauseQuiz6DoesntExist() {
+		try {
+			testService.addNewAttempt("Theodora", 1, new GregorianCalendar(), 6);
 		} catch (Exception e) {}
 	}
 }

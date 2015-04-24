@@ -4,6 +4,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.ListIterator;
+import java.util.Calendar;
 
 /**
  * Implements the interface QuizService.
@@ -84,8 +85,31 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
 			}
 	}
 	
-	public void addNewAttempt(Attempt attempt) 
-		throws RemoteException, IllegalArgumentException {}
+	public void addNewAttempt(String userName, int score, Calendar date, int quizId)
+		throws RemoteException, IllegalArgumentException {
+			//Checks whether the quizId exists.
+			//If false, an exception is thrown.
+			if (!quizIdExists(quizId)) {
+				throw new IllegalArgumentException();
+			} else {
+				//Creates an iterator to search the list.
+				ListIterator<Quiz> iterator = quizzes.listIterator(0);
+				boolean finished = false;
+				while (!finished) {
+					if (iterator.hasNext()) {
+						Quiz temp = iterator.next();
+						if (temp.getQuizId() == quizId) {
+							iterator.remove();
+							temp.addNewAttempt(userName, score, date);
+							quizzes.add(temp);
+							finished = true;
+						}
+					} else {
+						finished = true;
+					}
+				}
+			}
+	}
 		
 	public int addNewQuiz(Quiz quiz) 
 		throws RemoteException, IllegalArgumentException, NullPointerException {
