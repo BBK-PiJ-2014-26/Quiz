@@ -261,4 +261,42 @@ public class QuizServiceTest {
 			testService.quizIdExists(0);
 		} catch (Exception e) {}
 	}
+	
+	/**
+	 * Tests playQuiz().
+	 *
+	 * Should throw exception because quizId 4 doesnt exist.
+	 */
+	@Test (expected = IllegalArgumentException.class)
+	public void shouldThrowExceptionBecauseQuizId4DoesntExist() {
+		try {
+			testService.playQuiz("Theodora", 4);
+		} catch (Exception e) {}
+	}
+	
+	/**
+	 * Tests playQuiz().
+	 *
+	 * Should throw exception because userName "Zoe" doesnt exist.
+	 */
+	@Test (expected = IllegalArgumentException.class)
+	public void shouldThrowExceptionBecausePlayerZoeDoesntExist() {
+		try {
+			testService.playQuiz("Zoe", 1);
+		} catch (Exception e) {}
+	}
+	
+	/**
+	 * Tests playQuiz().
+	 *
+	 * Verifies the correct List of Question is returned.
+	 * The list should be of size 1.
+	 */
+	@Test
+	public void shouldReturnListOfQuestionsOfSize1() {
+		try {
+			List<Question> test = testService.playQuiz("Theodora", 1);
+			assertEquals(1, test.size());
+		} catch (Exception e) {}
+	}
 }
