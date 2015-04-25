@@ -3,6 +3,7 @@ import java.rmi.RemoteException;
 import java.rmi.Naming;
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
+import java.util.Scanner;
 
 /**
  * Implements the interface QuizClient.
@@ -53,5 +54,69 @@ public class QuizClientImpl implements QuizClient {
 		//If there is an exception, no action is required,
 		//because result has been initialised to false.
 		return result;
+	}
+	
+	public void welcome() {
+		System.out.println("\n\n~~~Welcome to Quizzes of the Ancients~~~");
+		selectWelcomeOption();		
+	}
+	
+	/**
+	 * Prompts the user for a selection within welcome.
+	 * Private because this method should only be used within the context of welcome().
+	 */
+	private void selectWelcomeOption() {
+		System.out.print("\nPlease select an option.\n" + "\n");
+		System.out.print("Type 1 to login.\n" + "Type 2 to register new player.\n" + "Type 3 to exit\n"+ "Selection: ");
+		Scanner sc = new Scanner(System.in);
+		String selection = sc.next();
+		//Checks if the user has selected 1.
+		//If true, runs login().
+		if (selection.equals("1")) {
+			String userName = requestUserName();
+			//Attempts to login the user.
+			//If login succeeds, the user proceeds.			
+			if (login(userName)) {
+				chooseOption(userName);
+			//If login fails, selectWelcomeOption is called again.
+			} else {
+				System.out.println("Username does not exist. Please try again.");
+				selectWelcomeOption();
+			}
+		//Checks if the user has selected 2.
+		//If true, runs register().
+		} else if (selection.equals("2")) {
+			String userName = requestUserName();
+			//Attempts to register a new Player.
+			//If registration fails, calls selectWelcomeOption().
+			if (!register(userName)) {
+				System.out.println("There was an error. Please try again.");
+				selectWelcomeOption();
+			//If registration succeeds, the user proceeds.
+			} else {
+				chooseOption(userName);
+			}
+		//Checks if user has selected 3.
+		//If true, the programme will terminate.
+		} else if (selection.equals("3")) {
+		//If none of these conditions are true, an error has occurred.
+		} else {
+			selectWelcomeOption();
+		}
+	}
+	
+	public void chooseOption(String userName) {
+	}
+	
+	/**
+	 * Request a user userName from the user.
+	 *
+	 * @return the userName submitted by the user.
+	 */
+	private String requestUserName() {
+		System.out.print("Please enter your username: ");
+		Scanner sc = new Scanner(System.in);
+		String userName = sc.next();
+		return userName;
 	}
 }

@@ -27,4 +27,17 @@ public interface QuizClient {
 	 * @return true if userName is unique and the registration is successfull.
 	 */
 	boolean register(String userName);
+	
+	/**
+	 * An initial menu which offers two options, 
+	 * login and register new user.
+	 */
+	void welcome();
+	
+	/**
+	 * Once a user has logged in or registered, they are prompted to choose an option.
+	 *
+	 * @param userName of the user currently logged in.
+	 */
+	void chooseOption(String userName);
 }
