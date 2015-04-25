@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.Calendar;
+import java.util.Iterator;
 
 /**
  * Implements the interface QuizService.
@@ -65,7 +66,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
 		while (iterator.hasNext()) {
 			Quiz temp = iterator.next();
 			//Checks whether the current Quiz has been terminated.
-			if (temp.isTerminated()) {
+			if (!temp.isTerminated()) {
 				result.add(temp);
 			}
 		}
@@ -161,6 +162,11 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
 							//Checks whether userName matches temp's author.
 							//If false, an exception is thrown.
 							if (!userName.equals(temp.getAuthor())) {
+								throw new IllegalArgumentException();
+							}
+							//Checks whether this Quiz has already been terminated.
+							//If true, an exception is thrown.
+							if (temp.isTerminated()) {
 								throw new IllegalArgumentException();
 							}
 							iterator.remove();

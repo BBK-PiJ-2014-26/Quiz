@@ -88,7 +88,7 @@ public class QuizServiceTest {
 	public void shouldThrowExceptionWhenUserNameIsNull() {
 		try {
 			testService.registerNewPlayer(null);
-		} catch (Exception e) {}
+		} catch (RemoteException e) {}
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class QuizServiceTest {
 	public void shouldThrowExceptionWhenUserExists() {
 		try {
 			testService.registerNewPlayer("Valens");
-		} catch (Exception e) {}
+		} catch (RemoteException e) {}
 	}
 	
 	/**
@@ -112,7 +112,7 @@ public class QuizServiceTest {
 	public void shouldThrowExceptionIfQuizIsNull() {
 		try {
 			testService.addNewQuiz(null);
-		} catch (Exception e) {}
+		} catch (RemoteException e) {}
 	}
 	
 	/**
@@ -130,7 +130,7 @@ public class QuizServiceTest {
 			//The author Basil has not been registered.
 			Quiz testQuiz = new QuizImpl(testList, "Basil", "The Byzantine Quiz 2"); 
 			testService.addNewQuiz(testQuiz);
-		} catch (Exception e) {}
+		} catch (RemoteException e) {}
 	}
 
 	/**
@@ -138,7 +138,7 @@ public class QuizServiceTest {
 	 *
 	 * Should return quiz id 2..
 	 */
-	@Test (expected = NullPointerException.class)
+	@Test
 	public void shouldReturnQuizId2() {
 		try {
 			//Creates a Quiz object to add to testService.
@@ -162,7 +162,7 @@ public class QuizServiceTest {
 		try {
 			//10 is not a regiestered quizId.
 			testService.terminateQuiz("Valens", 10);
-		} catch (Exception e) {}
+		} catch (RemoteException e) {}
 	}
 	
 	/**
@@ -175,7 +175,7 @@ public class QuizServiceTest {
 		try {
 			//Valens is not the author of the quizId 1.
 			testService.terminateQuiz("Valens", 1);
-		} catch (Exception e) {}
+		} catch (RemoteException e) {}
 	}
 	
 	/**
@@ -190,7 +190,7 @@ public class QuizServiceTest {
 			testService.terminateQuiz("Theodora", 1);
 			//As the quiz has  already been terminated, an exception should now been thrown.
 			testService.terminateQuiz("Theodora", 1);
-		} catch (Exception e) {}
+		} catch (RemoteException e) {}
 	}
 	
 	/**
@@ -254,7 +254,7 @@ public class QuizServiceTest {
 	public void shouldThrowExceptionWhenQuizIdIsNegative() {
 		try {	
 			testService.quizIdExists(-2);
-		} catch (Exception e) {}
+		} catch (RemoteException e) {}
 	}
 	
 	/**
@@ -266,7 +266,7 @@ public class QuizServiceTest {
 	public void shouldThrowExceptionWhenQuizIdIsZero() {
 		try {	
 			testService.quizIdExists(0);
-		} catch (Exception e) {}
+		} catch (RemoteException e) {}
 	}
 	
 	/**
@@ -278,7 +278,7 @@ public class QuizServiceTest {
 	public void shouldThrowExceptionBecauseQuizId4DoesntExist() {
 		try {
 			testService.playQuiz("Theodora", 4);
-		} catch (Exception e) {}
+		} catch (RemoteException e) {}
 	}
 	
 	/**
@@ -290,7 +290,7 @@ public class QuizServiceTest {
 	public void shouldThrowExceptionBecausePlayerZoeDoesntExist() {
 		try {
 			testService.playQuiz("Zoe", 1);
-		} catch (Exception e) {}
+		} catch (RemoteException e) {}
 	}
 	
 	/**
@@ -316,6 +316,6 @@ public class QuizServiceTest {
 	public void shouldThrowExceptionBecauseQuiz6DoesntExist() {
 		try {
 			testService.addNewAttempt("Theodora", 1, new GregorianCalendar(), 6);
-		} catch (Exception e) {}
+		} catch (RemoteException e) {}
 	}
 }
