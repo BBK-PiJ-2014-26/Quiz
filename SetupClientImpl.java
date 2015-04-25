@@ -1,10 +1,9 @@
-public class SetupClientImpl implements SetupClient {
+public class SetupClientImpl extends QuizClientImpl implements SetupClient {
 	
 	public void welcome() {
 		System.out.println("Welcome to Quizzes of the Ancients.");
 		System.out.print("\n" + "SETUP\n" + "\n");
-
-		
+		selectWelcomeSelection();		
 	}
 	
 	/**
@@ -31,7 +30,12 @@ public class SetupClientImpl implements SetupClient {
 		//Checks if the user has selected 2.
 		//If true, runs register().
 		} else if (selection.equals("2")) {
-			register(requestUserName());
+			//Attempts to register a new Player.
+			//If registration succeeds, the user proceeds.
+			if (register(requestUserName())) {
+				System.out.println("There was an error. Please try again.");
+				selectWelcomeOption();
+			}
 		//Checks if user has selected 3.
 		//If true, the programme will terminate.
 		} else if (selection.equals("3") {}
@@ -53,28 +57,23 @@ public class SetupClientImpl implements SetupClient {
 		return userName;
 	}
 	
-	public boolean login(String userName) {
-		boolean result = false;
-		//Checks whether the userName is registered on the QuizService.
-		if (service.userNameExists(userName)) {
-			result = true;
+	public void chooseOption() {
+		System.out.println("Please select an option.");
+		System.out.print("\n" + "Type 1 to setup a new quiz.\n" + "Type 2 to terminate a quiz.\n");
+		System.out.print("Type 3 to exit.\n" + "Selection: ");
+		Scanner sc = new Scanner(System.in);
+		String selection = sc.next();
+		//If the user has typed 1, calls setupNewQuiz().
+		if (selection.equals("1")) {
+			setupNewQuiz();
+		//If user has typed 2, calls terminateQuiz().
+		} else if (selection.equals("2")) {
+			terminateQuiz();
+		//If user has typed 3, the programme completes its execution.
+		} else if (selection.equals("3")) {
+		//Otherwise there was an error input, so chooseOption is called again.
+		} else {
+			chooseOption();
 		}
-		return result;
-	}
-	
-	boolean register(String userName) {
-		boolean result = false;
-		//Checks whether the userName exists on the QuizService.
-		//If false, the userName is unique and the QuizService registers it.
-		if (!service.userNameExists(userName)) {
-			try {
-				service.registerNewPlayer(userName);
-				result = true;
-			} catch (Exception e) {
-				//If there is an exception, no action is required,
-				//because result has been initialised to false.
-			}
-		}
-		return result;
 	}
 }
