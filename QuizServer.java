@@ -3,7 +3,6 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 import java.util.LinkedList;
-import java.util.ListIterator;
 import java.util.Calendar;
 import java.util.Iterator;
 
@@ -13,7 +12,8 @@ import java.util.Iterator;
 public class QuizServer extends UnicastRemoteObject implements QuizService {
 	/**
 	 * A TreeSet which holds registered Players on the QuizService.
-	 * Uses a TreeSet because userNames are supplied randomly so the TreeSet should provide efficient searching.
+	 * Uses a TreeSet because userNames are supplied randomly
+	 * The TreeSet should provide efficient searching.
 	 */
 	private TreeSet<Player> players;
 	/**
