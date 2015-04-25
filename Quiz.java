@@ -20,7 +20,6 @@ public interface Quiz {
 	
 	/**
 	 * Sets the status of the quiz to terminated.
-	 *
 	 */
 	void terminate();
 	
