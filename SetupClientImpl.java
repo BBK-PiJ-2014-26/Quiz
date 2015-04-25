@@ -8,8 +8,8 @@ import java.util.List;
 public class SetupClientImpl extends QuizClientImpl implements SetupClient {
 	
 	public void welcome() {
-		System.out.println("Welcome to Quizzes of the Ancients.");
-		System.out.print("\n" + "SETUP\n" + "\n");
+		System.out.println("\n\n~~~Welcome to Quizzes of the Ancients~~~");
+		System.out.print("\n" + "SETUP" + "\n");
 		selectWelcomeOption();		
 	}
 	
@@ -18,7 +18,7 @@ public class SetupClientImpl extends QuizClientImpl implements SetupClient {
 	 * Private because this method should only be used within the context of welcome().
 	 */
 	private void selectWelcomeOption() {
-		System.out.print("Please select an option.\n" + "\n");
+		System.out.print("\nPlease select an option.\n" + "\n");
 		System.out.print("Type 1 to login.\n" + "Type 2 to register new player.\n" + "Type 3 to exit\n"+ "Selection: ");
 		Scanner sc = new Scanner(System.in);
 		String selection = sc.next();
@@ -40,10 +40,13 @@ public class SetupClientImpl extends QuizClientImpl implements SetupClient {
 		} else if (selection.equals("2")) {
 			String userName = requestUserName();
 			//Attempts to register a new Player.
-			//If registration succeeds, the user proceeds.
-			if (register(userName)) {
+			//If registration fails, calls selectWelcomeOption().
+			if (!register(userName)) {
 				System.out.println("There was an error. Please try again.");
 				selectWelcomeOption();
+			//If registration succeeds, the user proceeds.
+			} else {
+				chooseOption(userName);
 			}
 		//Checks if user has selected 3.
 		//If true, the programme will terminate.
@@ -60,14 +63,14 @@ public class SetupClientImpl extends QuizClientImpl implements SetupClient {
 	 * @return the userName submitted by the user.
 	 */
 	private String requestUserName() {
-		System.out.print("Please enter you username: ");
+		System.out.print("Please enter your username: ");
 		Scanner sc = new Scanner(System.in);
 		String userName = sc.next();
 		return userName;
 	}
 	
 	public void chooseOption(String userName) {
-		System.out.println("Please select an option.");
+		System.out.println("\nPlease select an option.");
 		System.out.print("\n" + "Type 1 to setup a new quiz.\n" + "Type 2 to terminate a quiz.\n");
 		System.out.print("Type 3 to exit.\n" + "Selection: ");
 		Scanner sc = new Scanner(System.in);
@@ -75,9 +78,11 @@ public class SetupClientImpl extends QuizClientImpl implements SetupClient {
 		//If the user has typed 1, calls setupNewQuiz().
 		if (selection.equals("1")) {
 			setupNewQuiz(userName);
+			chooseOption(userName);
 		//If user has typed 2, calls terminateQuiz().
 		} else if (selection.equals("2")) {
 			terminateQuiz(userName);
+			chooseOption(userName);
 		//If user has typed 3, the programme completes its execution.
 		} else if (selection.equals("3")) {
 		//Otherwise there was an error input, so chooseOption is called again.
@@ -90,12 +95,11 @@ public class SetupClientImpl extends QuizClientImpl implements SetupClient {
 		System.out.print("Please enter the name of your quiz: ");
 		Scanner sc = new Scanner(System.in);
 		String name = sc.next();
-		List<Question> questions = new LinkedList(); 
-		requestQuestion(questions);
+		List<Question> questions = requestQuestion();
 		Quiz quiz = new QuizImpl(questions, userName, name);
 		try { 
 			int quizId = service.addNewQuiz(quiz);
-			System.out.println("Congratulations, you have made a quiz. Your quiz has ID " + quizId);
+			System.out.println("Congratulations, you made a quiz!\nYour quiz ID is " + quizId);
 		} catch (Exception e) {
 			System.out.println("There was an error. Please try again.");
 		}
@@ -107,7 +111,8 @@ public class SetupClientImpl extends QuizClientImpl implements SetupClient {
 	 *
 	 * @param questions is the list of Question to which the new Question is to be added.
 	 */
-	private void requestQuestion(List<Question> questions) {
+	private List<Question> requestQuestion() {
+		List<Question> result = new LinkedList<Question>();
 		System.out.print("Please enter the text of your question: ");
 		Scanner sc = new Scanner(System.in);
 		String question = sc.next();
@@ -119,22 +124,27 @@ public class SetupClientImpl extends QuizClientImpl implements SetupClient {
 			System.out.print("Please enter possible answer: ");
 			sc = new Scanner(System.in);
 			possibleAnswers[i] = sc.next();
-			System.out.print("Type y if this is the correct answer, type anything else if not: ");
-			sc = new Scanner(System.in);
-			String answer = sc.next();
-			//If the user answers y , correct answer is set to the index of the array possibleAnswers.
-			if (answer.equals("y")) {
-				correctAnswer = i;
+			//Checks correctAnswer. If it's between 0 and 3 then correctAnswer is already set.
+			if (correctAnswer < 0 || correctAnswer > 3) {
+				System.out.print("Type y if this is the correct answer, type anything else if not: ");
+				sc = new Scanner(System.in);
+				String answer = sc.next();					
+				//If the user answers y , correct answer is set to the index of the array possibleAnswers.
+				if (answer.equals("y")) {
+					correctAnswer = i;
+				}
 			}
 		}
-		questions.add(new QuestionImpl(question, possibleAnswers, correctAnswer));
+		result.add(new QuestionImpl(question, possibleAnswers, correctAnswer));
 		System.out.print("Type y if you wish to add another question, type anything else if not: ");
 		sc = new Scanner(System.in);
 		String answer = sc.next();
 		//If the user answers y , requestQuestion is called again.
 		if (answer.equals("y")) {
-			requestQuestion(questions);
+			result = requestQuestion();
 		}
+		System.out.println();
+		return result;
 	}
 	
 	public void terminateQuiz(String userName) {
@@ -145,14 +155,14 @@ public class SetupClientImpl extends QuizClientImpl implements SetupClient {
 			//Checks whether the supplied quizId exists on the quizService.
 			//If false, terminateQuiz() is called again.
 			if (!service.quizIdExists(quizId)) {
-				System.out.println("Invalid ID, please try again.");
+				System.out.println("Invalid ID, please try again.\n");
 				terminateQuiz(userName);
 			} else {	
 				service.terminateQuiz(userName, quizId);
 			}
 		} catch (Exception e) {
-				//If an exception occurs, calls chooseOption().
-				System.out.println("There was an error, please try again.");
+			//If an exception occurs, calls chooseOption().
+			System.out.println("There was an error, please try again.");
 		}
 	}
 }
