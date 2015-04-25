@@ -1,7 +1,7 @@
 /** 
  * A client which allows users to select and play a Quiz.
  */
-public interface PlayerClient {
+public interface PlayerClient extends QuizClient {
 	
 	/**
 	 * An initial menu which offers two options, 

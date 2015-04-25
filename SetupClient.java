@@ -1,9 +1,10 @@
 /**
  * A client which enables a user to setup new quizzes on a QuizService.
+ * Extends the interface QuizClient.
  *
  * In addition, a user can terminate an active quiz and register as a new user.
  */
-public interface SetupClient {
+public interface SetupClient extends QuizClient {
 	
 	/**
 	 * An initial menu which offers two options, 
@@ -31,22 +32,4 @@ public interface SetupClient {
 	 * @param quizId of the QuizId the Player wishes to terminate.
 	 */
 	void terminateQuiz(int quizId);
-	
-	/**
-	 * Takes a userName from the Player.
-	 * Allows the Player to proceed if the userName is registered on the QuizService.
-	 *
-	 * @param userName submitted by the player.
-	 * @return true if the Player's userName is registered.
-	 */
-	boolean login(String userName);
-	
-	/**
-	 * Take a userName from the Player and registers it on the QuizService.
-	 * The userName must be unique.
-	 *
-	 * @param userName the Player wishes to register.
-	 * @return true if userName is unique and the registration is successfull.
-	 */
-	boolean register(String userName);
 }
