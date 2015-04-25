@@ -19,12 +19,34 @@ public interface SetupClient {
 	
 	/**
 	 * If a user selects Setup New Quiz, this method will collect the Quiz data.
+	 *
+	 * @return the quizId for the new Quiz.
 	 */
-	void setupNewQuiz();
+	int setupNewQuiz();
 	
 	/**
 	 * If a user selects Terminate, this method terminate the quiz 
 	 * and return quiz details to the user.
+	 *
+	 * @param quizId of the QuizId the Player wishes to terminate.
 	 */
-	void terminateQuiz();
+	void terminateQuiz(int quizId);
+	
+	/**
+	 * Takes a userName from the Player.
+	 * Allows the Player to proceed if the userName is registered on the QuizService.
+	 *
+	 * @param userName submitted by the player.
+	 * @return true if the Player's userName is registered.
+	 */
+	boolean login(String userName);
+	
+	/**
+	 * Take a userName from the Player and registers it on the QuizService.
+	 * The userName must be unique.
+	 *
+	 * @param userName the Player wishes to register.
+	 * @return true if userName is unique and the registration is successfull.
+	 */
+	boolean register(String userName);
 }
