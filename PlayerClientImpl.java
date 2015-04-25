@@ -53,7 +53,7 @@ public class PlayerClientImpl extends QuizClientImpl implements PlayerClient {
 			int quizId = requestQuizId();
 			try {
 				List<Question> questions = service.playQuiz(userName, quizId);
-				playQuiz(questions, userName);
+				playQuiz(questions, userName, quizId);
 			} catch (Exception e) {
 				System.out.println("There was an error. Please try again.\n");
 				selectQuizOptions(userName);
@@ -89,6 +89,60 @@ public class PlayerClientImpl extends QuizClientImpl implements PlayerClient {
 		return quizId;
 	}
 	
-	public void playQuiz(List<Question> questions, String userName) {}
+	public void playQuiz(List<Question> questions, String userName, int quizId) {
+		int score = 0;
+		//Creates an iterator to cycle through the questions.
+		ListIterator<Question> iterator = questions.listIterator();
+		while (iterator.hasNext()) {
+			Question temp = iterator.next();
+			System.out.println(temp.getQuestion());
+			String[] possibleAnswers = temp.getPossibleAnswers();
+			System.out.println("A: " + possibleAnswers[0]);
+			System.out.println("B: " + possibleAnswers[1]);
+			System.out.println("C: " + possibleAnswers[2]);
+			System.out.println("D: " + possibleAnswers[3] + "\n");
+			int answer = requestAnswer();
+			//Tests whether the Player has submitted the correctAnswer.
+			//If true, increments the score.
+			if (answer == temp.getCorrectAnswer()) {
+				score++;
+			}
+		}
+		try {
+			service.addNewAttempt(userName, score, Calendar.getInstance(), quizId);
+		} catch (Exception e) {
+			System.out.println("There was an error. Please try again.\n");
+			selectQuizOptions(userName);
+		}
+	}
 	
+	/**
+	 * Requests an answer from the Player.
+	 *
+	 * @return the index of possibleAnswers where the Player guesses the answer.
+	 */
+	private int requestAnswer() {
+		//Initialised 
+		int index = -1;
+		System.out.print("What is your answer: ");
+		Scanner sc = new Scanner(System.in);
+		String s = sc.next();
+		//If the answer is A, the index is set to 0.
+		if (s.equals("A")) {
+			index = 0;
+		//If the answer is B, the index is set to 1.
+		} else if (s.equals("B")) {
+			index = 1;
+		//If the answer is C, the index is set to 2.
+		} else if (s.equals("C")) {
+			index = 2;
+		//If the answer is D, the index is set to 3.
+		} else if (s.equals("D")) {
+			index = 3;
+		} else {
+			System.out.println("Invalid answer, please try again.");
+			index = requestAnswer();
+		}
+		return index;
+	}
 }

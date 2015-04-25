@@ -318,4 +318,32 @@ public class QuizServiceTest {
 			testService.addNewAttempt("Theodora", 1, new GregorianCalendar(), 6);
 		} catch (RemoteException e) {}
 	}
+	
+	/**
+	 * Tests getTop3().
+	 *
+	 * Should throw exception when quizId does not exist.
+	 */
+	@Test (expected = IllegalArgumentException.class)
+	public void shouldThrowExceptionBecauseQuiz12DoesntExist() {
+		try {
+			testService.getTop3(12);
+		} catch (RemoteException e) {}
+	}
+	
+	/**
+	 * Tests getTop3().
+	 *
+	 * Should returna list of size 3..
+	 */
+	@Test (expected = IllegalArgumentException.class)
+	public void shouldReturnAListOfSize3() {
+		try {
+			testService.addNewAttempt("Theodora", 1, new GregorianCalendar(), 1);
+			testService.addNewAttempt("Theodora", 3, new GregorianCalendar(), 1);
+			testService.addNewAttempt("Theodora", 9, new GregorianCalendar(), 1);
+			testService.addNewAttempt("Theodora", 6, new GregorianCalendar(), 1);
+			testService.getTop3(12);
+		} catch (RemoteException e) {}
+	}
 }

@@ -18,6 +18,7 @@ public interface PlayerClient extends QuizClient {
 	 * 
 	 * @param questions are the question from the quiz a Player has selected.
 	 * @param userName of the Player.
+	 * @param quizId of the Quiz to be played.
 	 */
-	void playQuiz(List<Question> questions, String userName);
+	void playQuiz(List<Question> questions, String userName, int quizId);
 }
