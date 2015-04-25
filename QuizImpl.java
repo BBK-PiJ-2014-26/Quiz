@@ -1,38 +1,45 @@
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.io.Serializable;
 
 /**
  * Implements the interface Quiz.
  */
-public class QuizImpl implements Quiz {
+public class QuizImpl implements Quiz,Serializable  {
 	/**
 	 * A list of questions to be asked in the quiz. Is stored in the order they are to be asked.
+	 * @serial
 	 */
 	private List<Question> questions;
 	/**
 	 * The author who wrote the quiz. 
 	 * Must be a Player who is registered on the QuizService.
+	 * @serial
 	 */
 	private String author;
 	/**
 	 * The name of the quiz.
+	 * @serial
 	 */
 	private String name;
 	/**
 	 * A boolean flag which indicates if a quiz is active or not.
 	 * If true, then the Quiz has been terminated.
+	 * @serial
 	 */
 	private boolean terminated;
 	/**
 	 * quizId identifies each quiz uniquely.
 	 * The field is set by the QuizService to ensure uniqueness.
+	 * @serial
 	 */
 	private int quizId;
 	/**
 	 * A list of Attempt objects.
 	 * Organised by score.
 	 * Highest being first, lowest being last.
+	 * @serial
 	 */
 	private Leaderboard leaderboard;
 	
