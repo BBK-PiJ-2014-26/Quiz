@@ -39,7 +39,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
 	
 	public QuizServer() throws RemoteException {
 		super();
-		players = new TreeSet<Player>(new PlayerComparator());
+		players = new TreeSet<Player>();
 		quizzes = new LinkedList<Quiz>();
 		//Initialises the unique Id counter to 1.
 		quizIdCounter = 1;
@@ -397,17 +397,6 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
 				System.out.println("Error reading data files.");
 				e.printStackTrace();
 			}
-		}
-	}
-	
-	/**
-	 * A comparator object to be used for organising Players on the QuizService.
- 	 */
-	class PlayerComparator implements Comparator<Player>, Serializable {
-		public int compare(Player p1, Player p2) {
-			String p1UserName = p1.getUserName();
-			String p2UserName = p2.getUserName();
-			return p1UserName.compareTo(p2UserName);
 		}
 	}
 }
