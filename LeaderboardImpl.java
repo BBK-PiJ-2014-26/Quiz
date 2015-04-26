@@ -28,25 +28,42 @@ public class LeaderboardImpl extends LinkedList<Attempt> implements Leaderboard,
 			throw new NullPointerException();
 		//Checks whether the list is empty.
 		//If true, a is added at index 0.		
-		} else if (isEmpty()) {
-			add(0, a);
-			result = true;
 		} else {
-			//Cyles through leaderboard to find where to places this attempt.
-			for (int i = 0; i < size(); i++) {
-				Attempt temp = get(i);
-				//Checks whether a's score is greater than or equal to the current Attempt's score.
-				//If true, a is added to the Leaderboard at index i.
-				if (a.getScore() >= temp.getScore()) {
-					add(i, a);
-					result = true;
-				//Boundary case is when the score is less than all other scores on the leaderboard.
-				//In that event, attempts is added to the last position.
-				} else if (i == (size() - 1)) {
-					addLast(a);
+			//Adds the element to the begginning of the list.
+			addFirst(a);
+			bubbleSort();
+			result = true;
+		}
+		return result;
+	}
+	
+	/**
+	 * Sorts the leaderboard using Bubble sort.
+	 * Bubble sort should be efficient because the list is sorted ater every add operation.
+	 * Therefore, the list will be mostly sorted.
+	 */
+	private void bubbleSort() {
+		for (int i = 0; i < (size() - 1); i++) {
+			for (int j = i; j < (size() - 1); j++) {
+			Attempt a = get(j);
+			Attempt b = get(j + 1);
+				//If a's score is less than or equal to b,
+				//a and b are swapped.
+				if (a.getScore() <= b.getScore()) {
+					swap(j, j + 1);
 				}
 			}
 		}
-		return result;
+	}
+	
+	/**
+	 * Swaps two elements in the leaderboard.
+	 *
+	 * @param i the index repsenting the left element where left should be greater than right.
+	 * @param j the index representing the right element.
+	 */
+	private void swap(int i, int j) {
+		Attempt a = remove(i);
+		add(j, a);
 	}
 }
