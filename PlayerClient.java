@@ -2,6 +2,7 @@ import java.util.List;
 
 /** 
  * A client which allows users to select and play a Quiz.
+ * @author Gareth Moore
  */
 public interface PlayerClient extends QuizClient {
 	

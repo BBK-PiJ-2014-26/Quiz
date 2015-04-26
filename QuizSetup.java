@@ -1,5 +1,6 @@
 /**
  * Contains the main method to run a SetupClient.
+ * @author Gareth Moore
  */
 public class QuizSetup {
 	

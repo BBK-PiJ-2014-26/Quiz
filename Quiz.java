@@ -7,6 +7,7 @@ import java.util.List;
  * It has a unique ID, a list of Questions, a name, and an author.
  * A quiz has a boolean flag to indicate if the quiz has terminated or not.
  * A leaderoard stores the scores in ascending order.
+ * @author Gareth Moore
  */
 public interface Quiz {
 

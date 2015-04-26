@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 /**
  * Implements the interface PlayerClient.
+ * @author Gareth Moore
  */
 public class PlayerClientImpl extends QuizClientImpl implements PlayerClient, Serializable {
 
