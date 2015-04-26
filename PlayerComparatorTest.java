@@ -19,9 +19,7 @@ public class PlayerComparatorTest {
 	 */
 	@Before
 	public void buildUp() {
-		player1 = new PlayerImpl();
-		player2 = new PlayerImpl();
-		player1.setUserName("Justinian");
+		player1 = new PlayerImpl("Justinian");	
 		myComp = new PlayerComparator();
 	}
 	
@@ -30,7 +28,7 @@ public class PlayerComparatorTest {
 	 */
 	@Test
 	public void shouldReturnZero() {
-		player2.setUserName("Justinian");
+		player2 = new PlayerImpl("Justinian");
 		assertEquals(0, myComp.compare(player1, player2));
 	}
 	
@@ -39,7 +37,7 @@ public class PlayerComparatorTest {
 	 */
 	@Test
 	public void shouldReturnNegativeNumber() {
-		player2.setUserName("Valens");
+		player2 = new PlayerImpl("Valens");
 		assertTrue(myComp.compare(player1, player2) < 0);
 	}	
 
@@ -48,7 +46,7 @@ public class PlayerComparatorTest {
 	 */
 	@Test
 	public void shouldReturnPositiveNumber() {
-		player2.setUserName("Constantine IX");
+		player2 = new PlayerImpl("Constantine IX");
 		assertTrue(myComp.compare(player1, player2) > 0);
 	}	
 }
