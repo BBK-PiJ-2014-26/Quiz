@@ -40,6 +40,10 @@ public class LeaderboardImpl extends LinkedList<Attempt> implements Leaderboard,
 				if (a.getScore() >= temp.getScore()) {
 					add(i, a);
 					result = true;
+				//Boundary case is when the score is less than all other scores on the leaderboard.
+				//In that event, attempts is added to the last position.
+				} else if (i == (size() - 1)) {
+					addLast(a);
 				}
 			}
 		}
