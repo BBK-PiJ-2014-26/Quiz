@@ -5,6 +5,14 @@ import java.util.List;
 import java.util.LinkedList;
 import java.util.Calendar;
 import java.util.ListIterator;
+import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
+import java.io.FileOutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.File;
+import java.util.Comparator;
+import java.io.Serializable;
 
 /**
  * Implements the interface QuizService.
@@ -24,7 +32,9 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
 	 * An int counter for tracking quizIds.
 	 * Holds the next unique id. Each call of nextId() increments the counter.
 	 */
-	private int quizIdCounter;
+	private Integer quizIdCounter;
+	
+	private static final long serialVersionUID = 4222;
 	 
 	
 	public QuizServer() throws RemoteException {
@@ -33,6 +43,14 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
 		quizzes = new LinkedList<Quiz>();
 		//Initialises the unique Id counter to 1.
 		quizIdCounter = 1;
+		//Checks whether players.data, quizzes.data and quizIdCounter.data exist.
+		//If true, calls read().
+		File player = new File("./players.data");
+		File quiz = new File("./quizzes.data");
+		File quizCounter = new File("./quizIdCounter.data");
+		if (player.exists() && quiz.exists() && quizCounter.exists()) {
+			read();
+		}
 	}
 
 	public void registerNewPlayer(String userName) 
@@ -51,6 +69,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
 				//Also, prevents other users from reading an incomplete set.
 				synchronized (players) {
 					players.add(new PlayerImpl(userName));
+					flushPlayers();
 				}
 			}
 	}
@@ -116,12 +135,16 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
 							finished = true;
 						}
 					}
+					flushQuizzes();
 				}
 			}
 	}
 		
 	public int addNewQuiz(Quiz quiz) 
 		throws RemoteException, IllegalArgumentException, NullPointerException {
+			//Initialises quizId to a negative nuber which is invalid 
+			//therefore preventing interference with user input.
+			int quizId = -10;
 			//Checks if quiz is null.
 			//If true, an exception is thrown.
 			if (quiz.equals(null)) {
@@ -135,12 +158,13 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
 				//Prevents other users from reading or writing to quizzes.
 				synchronized (quizzes) {
 					//Calls nextId() to return the next unique quizId.
-					int quizId = nextId();
+					quizId = nextId();
 					quiz.setQuizId(quizId);
 					quizzes.add(quiz);
-					return quizId;
+					flushQuizzes();
 				}
 			}
+			return quizId;
 	}
 	
 	/**
@@ -156,6 +180,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
 	private synchronized int nextId() {
 		int result = quizIdCounter;
 		quizIdCounter++;
+		flushQuizCounter();
 		return result;
 	}
 	
@@ -183,10 +208,14 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
 							if (temp.isTerminated()) {
 								throw new IllegalArgumentException();
 							}
-							iterator.remove();
-							temp.terminate();
-							quizzes.add(temp);
-							finished = true;
+							//Locks quizzes to prvent conflicts.
+							synchronized (quizzes) {
+								iterator.remove();
+								temp.terminate();
+								quizzes.add(temp);
+								finished = true;
+								flushQuizzes();
+							}
 						}
 					} else {
 						finished = true;
@@ -258,8 +287,127 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
 			return winner;
 		}
 	}
-		
-	//private void flush() {}
 	
-	//private void read() {}
+	/**
+	 * Writes the contents of players to disk.
+	 */
+	private void flushPlayers() {
+		FileOutputStream fos = null;
+		ObjectOutputStream player = null;	
+		//Locks players to prevent data changing during write to disk.
+		synchronized (players) {
+			try {	
+				fos = new FileOutputStream("./players.data");
+				player = new ObjectOutputStream(fos);
+				player.writeObject(players);
+			} catch (IOException e) {
+				System.out.println("There was an error writing to disk. Contents of players were not written to disk");
+			} finally {
+				try {
+					fos.close();
+					player.close();
+				} catch (IOException e) {
+					System.out.println("There was an error writing to disk. Contents of players were not written to disk");
+				}
+
+			}
+		}
+	}
+	
+	/**
+	 * Writes the contents of quizzes to disk.
+	 */
+	private void flushQuizzes() {
+		FileOutputStream fos = null;
+		ObjectOutputStream quiz = null;
+		//Locks quizzes to prevent data being changed during write to disk.
+		synchronized (quizzes) {
+			try {	
+				fos = new FileOutputStream("./quizzes.data");
+				quiz = new ObjectOutputStream(fos);
+				quiz.writeObject(quizzes);
+			} catch (IOException e) {
+				System.out.println("There was an error writing to disk.	Contents of quizzes were not written to disk");
+			} finally {
+				try {
+				 	fos.close();
+					quiz.close();
+				} catch (IOException e) {
+					System.out.println("There was an error writing to disk.	Contents of quizzes were not written to disk");
+				}
+
+			}
+		}
+	}
+
+	/**
+	 * Writes the contents of quizCounter to disk.
+	 */
+	private void flushQuizCounter() {
+		FileOutputStream fos = null;
+		ObjectOutputStream quizCounter = null;
+		//Locks quizIdCounter to prevent data being changed during write to disk.
+		synchronized (quizIdCounter) {
+			try {	
+				fos = new FileOutputStream("./quizIdCounter.data");
+				quizCounter = new ObjectOutputStream(fos);
+				quizCounter.writeObject(quizIdCounter);
+			} catch (IOException e) {
+				System.out.println("There was an error writing to disk.	Contents of quizIdCounter were not written to disk");
+			} finally {
+				try {
+					fos.close();
+					quizCounter.close();
+				} catch (IOException e) {
+					System.out.println("There was an error writing to disk.	Contents of quizIdCounter were not written to disk");
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Reads the contents of players.data, quizzes.data and quizIdCounter.data.
+	 * Assigns the contents to the corresponding instance variables.
+	 */
+	private void read() {
+		ObjectInputStream input = null;
+		FileInputStream fis = null;
+		try {
+			//Reads files as the Object superclass then downcasts to their correct class.
+			fis = new FileInputStream("./players.data");
+			input = new ObjectInputStream(fis);
+			Object temp = input.readObject();
+			players = (TreeSet<Player>) temp;
+			fis = new FileInputStream("./quizzes.data");
+			input = new ObjectInputStream(fis);
+			temp = input.readObject();
+			quizzes = (LinkedList<Quiz>) temp;
+			fis = new FileInputStream("./quizIdCounter.data");
+			input = new ObjectInputStream(fis);
+			temp = input.readObject();
+			quizIdCounter = (Integer) temp;
+		} catch (Exception e) {
+			System.out.println("Error reading data files.");
+			e.printStackTrace();
+		} finally {
+			try {
+				fis.close();
+				input.close();
+			} catch (Exception e) {
+				System.out.println("Error reading data files.");
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	/**
+	 * A comparator object to be used for organising Players on the QuizService.
+ 	 */
+	class PlayerComparator implements Comparator<Player>, Serializable {
+		public int compare(Player p1, Player p2) {
+			String p1UserName = p1.getUserName();
+			String p2UserName = p2.getUserName();
+			return p1UserName.compareTo(p2UserName);
+		}
+	}
 }

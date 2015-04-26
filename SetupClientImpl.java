@@ -107,7 +107,7 @@ public class SetupClientImpl extends QuizClientImpl implements SetupClient {
 				service.terminateQuiz(userName, quizId);
 				Attempt winner = service.getWinner(quizId);
 				System.out.println("The winner is " + winner.getUserName() + " with a score of "
-					+ winner.getScore() + "."\n);
+					+ winner.getScore() + ".\n");
 			}
 		} catch (Exception e) {
 			//If an exception occurs, calls chooseOption().

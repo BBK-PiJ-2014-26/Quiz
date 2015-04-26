@@ -99,18 +99,5 @@ public interface QuizService extends Remote {
 	 * @return the winning Attempt.
 	 */
 	Attempt getWinner(int quizId) throws RemoteException, IllegalArgumentException;
-	
-	
-	// These methods are not accessible to the Play Client or Setup Client.
-	
-	/**
-	 * Writes the contents of the QuizServer to disk.
-	 *
-	 */
-	//private void flush();
-	
-	/**
-	 * Read the contents of the QuizServer from disk.
-	 */
-	//private void read();	
+
 }
