@@ -4,6 +4,7 @@ import java.io.Serializable;
 /**
  * Implements the interface Leaderboard.
  * Extends a LinkedList, but overrides the add method to ensure Attempts are organised by score.
+ * @author Gareth Moore
  */
 public class LeaderboardImpl extends LinkedList<Attempt> implements Leaderboard, Serializable {
 		
@@ -39,7 +40,7 @@ public class LeaderboardImpl extends LinkedList<Attempt> implements Leaderboard,
 	
 	/**
 	 * Sorts the leaderboard using Bubble sort.
-	 * Bubble sort should be efficient because the list is sorted ater every add operation.
+	 * Bubble sort should be efficient because the list is sorted after every add operation.
 	 * Therefore, the list will be mostly sorted.
 	 */
 	private void bubbleSort() {

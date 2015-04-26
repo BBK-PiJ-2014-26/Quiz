@@ -5,6 +5,7 @@ import java.util.GregorianCalendar;
 
 /**
  * Tests the class LeaderboardImpl and the interface Leaderboard.
+ * @author Gareth Moore
  */
 public class LeaderboardTest {
 	
