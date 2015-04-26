@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * Tests the class QuizImpl and the interface QuizTest.
+ * @author Gareth Moore
  */
 public class QuizTest {
 	

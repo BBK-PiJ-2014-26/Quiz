@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 /**
  * Implements the interface Quiz.
+ * @author Gareth Moore
  */
 public class QuizImpl implements Quiz,Serializable  {
 	/**
