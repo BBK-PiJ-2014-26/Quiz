@@ -2,6 +2,7 @@ import java.io.Serializable;
 
 /**
  * Implements the interface Player.
+ * @author Gareth Moore
  */
 public class PlayerImpl implements Player, Serializable {
 	/**
