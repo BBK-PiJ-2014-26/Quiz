@@ -86,7 +86,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
 			}
 	}
 	
-	public void addNewAttempt(String userName, int score, Calendar date, int quizId)
+	public void addNewAttempt(Attempt attempt, int quizId)
 		throws RemoteException, IllegalArgumentException {
 			//Checks whether the quizId exists.
 			//If false, an exception is thrown.
@@ -94,14 +94,14 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
 				throw new IllegalArgumentException();
 			} else {
 				//Creates an iterator to search the list.
-				ListIterator<Quiz> iterator = quizzes.listIterator(0);
+				ListIterator<Quiz> iterator = quizzes.listIterator();
 				boolean finished = false;
 				while (!finished) {
 					if (iterator.hasNext()) {
 						Quiz temp = iterator.next();
 						if (temp.getQuizId() == quizId) {
 							iterator.remove();
-							temp.addNewAttempt(userName, score, date);
+							temp.addNewAttempt(attempt);
 							quizzes.add(temp);
 							finished = true;
 						}

@@ -62,13 +62,11 @@ public interface QuizService extends Remote {
 	 * Moreover, if the Player has the new highest score, 
 	 * the quiz's leader field is updated.
 	 *
-	 * @param userName of the quiz the Player has completed.
-	 * @param score that the player recorded.
-	 * @param date the Attempt was made.
-	 * @param quizId of the Quiz which was attempted.
+	 * @param attempt at the quiz.
+	 * @param quizId of the quiz attempted.
 	 * @throws IllegalArgumentException if the quizId does not exist.
 	 */
-	void addNewAttempt(String userName, int score, Calendar date, int quizId) throws RemoteException, IllegalArgumentException;	 
+	void addNewAttempt(Attempt attempt, int quizId) throws RemoteException, IllegalArgumentException;	 
 	
 	
 	//These methods are designed for use with the Setup Client.
