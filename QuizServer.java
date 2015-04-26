@@ -62,7 +62,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
 	
 	public List<Quiz> getAllActiveQuizzes() throws RemoteException {
 		List<Quiz> result = new LinkedList<Quiz>();
-		ListIterator<Quiz> iterator = quizzes.listIterator(0);
+		ListIterator<Quiz> iterator = quizzes.listIterator();
 		while (iterator.hasNext()) {
 			Quiz temp = iterator.next();
 			//Checks whether the current Quiz has been terminated.
@@ -191,7 +191,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
 	private Quiz getQuiz(int quizId) {
 		Quiz result = null;
 		//Creates an iterator to search the list.
-		ListIterator<Quiz> iterator = quizzes.listIterator(0);
+		ListIterator<Quiz> iterator = quizzes.listIterator();
 		boolean finished = false;
 		while (!finished) {
 			if (iterator.hasNext()) {
@@ -229,6 +229,19 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
 				}
 			}
 			return result;
+		}
+	}
+	
+	public Attempt getWinner(int quizId) throws RemoteException, IllegalArgumentException {
+		//Check whether quizId exists.
+		//If false, an exception is thrown.
+		if (!quizIdExists(quizId)) {
+			throw new IllegalArgumentException();
+		} else {
+			Quiz temp = getQuiz(quizId);
+			Leaderboard tempLeaderboard = temp.getLeaderboard();
+			Attempt winner = tempLeaderboard.get(0);
+			return winner;
 		}
 	}
 		

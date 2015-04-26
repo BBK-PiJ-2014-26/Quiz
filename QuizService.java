@@ -93,6 +93,15 @@ public interface QuizService extends Remote {
 	 */
 	void terminateQuiz(String userName, int quizId) throws RemoteException, IllegalArgumentException;
 	
+	/**
+	 * Returns the top 3 scores in a given quiz.
+	 *
+	 * @param quizId of the quiz.
+	 * @throws IllegalArgumentException if the quizId does not exist.
+	 * @return the winning Attempt.
+	 */
+	Attempt getWinner(int quizId) throws RemoteException, IllegalArgumentException;
+	
 	
 	// These methods are not accessible to the Play Client or Setup Client.
 	

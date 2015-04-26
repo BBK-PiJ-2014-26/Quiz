@@ -320,30 +320,31 @@ public class QuizServiceTest {
 	}
 	
 	/**
-	 * Tests getTop3().
+	 * Tests getWinner().
 	 *
 	 * Should throw exception when quizId does not exist.
 	 */
 	@Test (expected = IllegalArgumentException.class)
 	public void shouldThrowExceptionBecauseQuiz12DoesntExist() {
 		try {
-			testService.getTop3(12);
+			testService.getWinner(12);
 		} catch (RemoteException e) {}
 	}
 	
 	/**
-	 * Tests getTop3().
+	 * Tests getWinner().
 	 *
-	 * Should returna list of size 3..
+	 * Should returna list of size 1.
 	 */
-	@Test (expected = IllegalArgumentException.class)
-	public void shouldReturnAListOfSize3() {
+	@Test 
+	public void shouldReturnWinnerTheodoraScore8() {
+		Attempt actual = null;
 		try {
-			testService.addNewAttempt("Theodora", 1, new GregorianCalendar(), 1);
-			testService.addNewAttempt("Theodora", 3, new GregorianCalendar(), 1);
-			testService.addNewAttempt("Theodora", 9, new GregorianCalendar(), 1);
-			testService.addNewAttempt("Theodora", 6, new GregorianCalendar(), 1);
-			testService.getTop3(12);
+			testService.addNewAttempt("Theodora", 8, new GregorianCalendar(), 1);
+			testService.addNewAttempt("Valens", 2, new GregorianCalendar(), 1);
+			actual = testService.getWinner(1);
 		} catch (RemoteException e) {}
+		assertEquals(8, actual.getScore());
+		assertEquals("Theodora", actual.getUserName());
 	}
 }
