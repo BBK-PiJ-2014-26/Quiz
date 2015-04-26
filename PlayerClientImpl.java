@@ -3,11 +3,12 @@ import java.util.ListIterator;
 import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.Calendar;
+import java.io.Serializable;
 
 /**
  * Implements the interface PlayerClient.
  */
-public class PlayerClientImpl extends QuizClientImpl implements PlayerClient {
+public class PlayerClientImpl extends QuizClientImpl implements PlayerClient, Serializable {
 
 	/**
 	 * Overrides method in QuizClientImpl.	 
@@ -112,7 +113,8 @@ public class PlayerClientImpl extends QuizClientImpl implements PlayerClient {
 			}
 		}
 		try {
-			service.addNewAttempt(userName, score, Calendar.getInstance(), quizId);
+			Attempt a = new AttemptImpl(userName, score);
+			service.addNewAttempt(a, quizId);
 		} catch (Exception e) {
 			System.out.println("There was an error. Please try again.\n");
 			selectQuizOptions(userName);
