@@ -28,9 +28,10 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
 	 
 	
 	public QuizServer() throws RemoteException {
+		super();
 		players = new TreeSet<Player>(new PlayerComparator());
 		quizzes = new LinkedList<Quiz>();
-		//Initialises the unique Id counter to 0.
+		//Initialises the unique Id counter to 1.
 		quizIdCounter = 1;
 	}
 
@@ -45,7 +46,12 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
 			} else if (userNameExists(userName)) {
 				throw new IllegalArgumentException();
 			} else {
-				players.add(new PlayerImpl(userName));
+				//As this method writes to player, it must acquire a lock.
+				//Prevents othre user writing to players a the same time.
+				//Also, prevents other users from reading an incomplete set.
+				synchronized (players) {
+					players.add(new PlayerImpl(userName));
+				}
 			}
 	}
 	
@@ -93,20 +99,22 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
 			if (!quizIdExists(quizId)) {
 				throw new IllegalArgumentException();
 			} else {
-				//Creates an iterator to search the list.
-				ListIterator<Quiz> iterator = quizzes.listIterator();
-				boolean finished = false;
-				while (!finished) {
-					if (iterator.hasNext()) {
-						Quiz temp = iterator.next();
-						if (temp.getQuizId() == quizId) {
-							iterator.remove();
-							temp.addNewAttempt(attempt);
-							quizzes.add(temp);
+				//Adds a new attemopt to the relevant quiz so must acquie a lock.
+				//Prevents other users from reading or writing to quizzes.
+				synchronized (quizzes) {
+					//Creates an iterator to search the list.
+					ListIterator<Quiz> iterator = quizzes.listIterator();
+					boolean finished = false;
+					while (!finished) {
+						if (iterator.hasNext()) {
+							Quiz temp = iterator.next();
+							if (temp.getQuizId() == quizId) {
+								temp.addNewAttempt(attempt);
+								finished = true;
+							}
+						} else {
 							finished = true;
 						}
-					} else {
-						finished = true;
 					}
 				}
 			}
@@ -123,11 +131,15 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
 			} else if (!userNameExists(quiz.getAuthor())) {
 				throw new IllegalArgumentException();
 			} else {
-				//Calls nextId() to return the next unique quizId.
-				int quizId = nextId();
-				quiz.setQuizId(quizId);
-				quizzes.add(quiz);
-				return quizId;
+				//Adds a new attemopt to the relevant quiz so must acquie a lock.
+				//Prevents other users from reading or writing to quizzes.
+				synchronized (quizzes) {
+					//Calls nextId() to return the next unique quizId.
+					int quizId = nextId();
+					quiz.setQuizId(quizId);
+					quizzes.add(quiz);
+					return quizId;
+				}
 			}
 	}
 	
@@ -136,10 +148,12 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
 	 * Returns the current value of quizIdCounter,
 	 * then increments the counter by 1.
 	 * Has private access because the method should only be accessed within addNewQuiz(Quiz).
+	 * Synchronized method because it increments quizIdCounter. 
+	 * Two threads should not be able to access this concurrently.
 	 *
 	 * @return a unique quizId.
 	 */
-	private int nextId() {
+	private synchronized int nextId() {
 		int result = quizIdCounter;
 		quizIdCounter++;
 		return result;
