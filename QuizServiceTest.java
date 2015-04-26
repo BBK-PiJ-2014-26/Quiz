@@ -315,7 +315,8 @@ public class QuizServiceTest {
 	@Test (expected = IllegalArgumentException.class)
 	public void shouldThrowExceptionBecauseQuiz6DoesntExist() {
 		try {
-			testService.addNewAttempt("Theodora", 1, new GregorianCalendar(), 6);
+			Attempt a = new AttemptImpl("Theodora", 1);
+			testService.addNewAttempt(a, 6);
 		} catch (RemoteException e) {}
 	}
 	
@@ -340,8 +341,10 @@ public class QuizServiceTest {
 	public void shouldReturnWinnerTheodoraScore8() {
 		Attempt actual = null;
 		try {
-			testService.addNewAttempt("Theodora", 8, new GregorianCalendar(), 1);
-			testService.addNewAttempt("Valens", 2, new GregorianCalendar(), 1);
+			Attempt a =  new AttemptImpl("Theodora", 8);
+			testService.addNewAttempt(a, 1);
+			a =  new AttemptImpl("Valens", 2);
+			testService.addNewAttempt(a, 1);
 			actual = testService.getWinner(1);
 		} catch (RemoteException e) {}
 		assertEquals(8, actual.getScore());
