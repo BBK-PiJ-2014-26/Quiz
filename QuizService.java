@@ -4,8 +4,9 @@ import java.util.List;
 import java.util.Calendar;
 
 /**
-* A service to allow users to either setup new quizzes or play existing quizzes.
-*/
+ * A service to allow users to either setup new quizzes or play existing quizzes.
+ * @author Gareth Moore
+ */
 public interface QuizService extends Remote {
 
 	//Methods below are designed for use on either the Setup Client or the Player Client

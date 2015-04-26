@@ -11,6 +11,7 @@ import java.io.File;
 /**
  * Tests the interface QuizService and the class QuizServer.
  * BEWARE, the files player.data, quiizzes.data and quizCounter.data will be before and after these tests.
+ * @author Gareth Moore
  */
 public class QuizServiceTest {
 
