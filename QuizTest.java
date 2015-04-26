@@ -1,7 +1,6 @@
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
-import java.util.GregorianCalendar;
 import java.util.Calendar;
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +102,8 @@ public class QuizTest {
 	@Test
 	public void shouldReturnLeaderboardOfSize1() {
 		//Adds a new attempt. As the list had zero attempts, the list will now have one element.
-		testQuiz.addNewAttempt("Constantine IX", 6, new GregorianCalendar(2014, 10, 10, 10, 30));
+		Attempt a = new AttemptImpl("Constantine IX", 6);
+		testQuiz.addNewAttempt(a);
 		List<Attempt> actualLeaderboard = testQuiz.getLeaderboard();
 		assertEquals(1, actualLeaderboard.size());
 	}
@@ -205,48 +205,11 @@ public class QuizTest {
 	/**
 	 * Tests addNewAttempt().
 	 *
-	 * Should throw exception if userName is null.
+	 * Should throw exception if attempt is null.
 	 */
-	@Test
-	public void shouldThrowExceptionIfUserNameIsNull() {
-		boolean exceptionThrown = false;
-		try {
-			testQuiz.addNewAttempt(null, 6, new GregorianCalendar(2014, 10, 10, 10, 30));
-		} catch (Exception e) {
-			exceptionThrown = true;
-		}
-		assertTrue(exceptionThrown);
-	}
-	
-	/**
-	 * Tests addNewAttempt().
-	 *
-	 * Should throw exception if Date is null.
-	 */
-	@Test
-	public void shouldThrowExceptionIfDateIsNull() {
-		boolean exceptionThrown = false;
-		try {
-			testQuiz.addNewAttempt("Constantine IX", 6, null);
-		} catch (Exception e) {
-			exceptionThrown = true;
-		}
-		assertTrue(exceptionThrown);
-	}
-	
-	/**
-	 * Tests addNewAttempt().
-	 *
-	 * Should throw exception if score is negative.
-	 */
-	@Test
-	public void shouldThrowExceptionIfScoreIsNegative() {
-		boolean exceptionThrown = false;
-		try {
-			testQuiz.addNewAttempt("Constantine IX", -9, new GregorianCalendar(2014, 10, 10, 10, 30));
-		} catch (Exception e) {
-			exceptionThrown = true;
-		}
-		assertTrue(exceptionThrown);
+	@Test (expected = NullPointerException.class)
+	public void shouldThrowExceptionIfAttemptIsNull() {
+		Attempt a = null;
+		testQuiz.addNewAttempt(a);
 	}
 }

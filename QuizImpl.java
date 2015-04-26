@@ -116,20 +116,16 @@ public class QuizImpl implements Quiz,Serializable  {
 		return questions;
 	}
 
-	public void addNewAttempt(String userName, int score, Calendar date)
-		throws NullPointerException, IllegalArgumentException {
-			//Checks to see if userName or date is null.
-			//If either is true, an excpetion is thrown.
-			if (userName.equals(null) || date.equals(null)) {
+	public void addNewAttempt(Attempt attempt)
+		throws NullPointerException {
+			//Checks to see if attempt is null.
+			//If true, an excpetion is thrown.
+			if (attempt.equals(null)) {
 				throw new NullPointerException();
-			//Checks to see if score is a negative number.
-			//If it is, an exception is thrown.
-			} else if (score < 0) {
-				throw new IllegalArgumentException();
 			} else {
 				//Creates a new Attempt object,
 				//then adds it to the leaderboard.
-				leaderboard.add(new AttemptImpl(userName, score, date));
+				leaderboard.add(attempt);
 			}
 	}
 	

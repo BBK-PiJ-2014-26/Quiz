@@ -64,14 +64,10 @@ public interface Quiz {
 	/**
 	 * Adds a new attempt to the Quiz's leaderboard.
 	 *
-	 * @param userName is the Player who attempted the quiz.
-	 * @param score that the Player scored on this attempt.
-	 * @param date which the Player attempted this quiz.
-	 * @throws NullPointerException if userName or date is null.
-	 * @throws IllegalArgumentException if score is less than zero.
+	 * @param attempt at the quiz.
+	 * @throws NullPointerException if attempt is null.
 	 */
-	void addNewAttempt(String userName, int score, Calendar date)
-		throws NullPointerException, IllegalArgumentException;
+	void addNewAttempt(Attempt attempt) throws NullPointerException;
 	
 	/**
 	 * @return the full Leaderboard of this quiz. 
