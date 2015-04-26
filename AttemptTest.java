@@ -1,7 +1,6 @@
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
-import java.util.GregorianCalendar;
 import java.util.Calendar;
 
 /**
@@ -19,9 +18,7 @@ public class AttemptTest {
 	public void buildUp() {
 		String userName = "Justinian";
 		int score = 6;
-		Calendar date = new GregorianCalendar(2015, 10, 10, 10, 15);
-		//For simplicity, creates a calendar object containing todays's date.
-		testAttempt = new AttemptImpl(userName, score, date);
+		testAttempt = new AttemptImpl(userName, score);
 	}
 	
 	/**
@@ -42,16 +39,5 @@ public class AttemptTest {
 	@Test
 	public void shouldReturn6() {
 		assertEquals(6, testAttempt.getScore());
-	}
-	
-	/**
-	 * Tests getDate().
-	 *
-	 * Should demonstrate that the returned value matches "Justinian".
-	 */
-	@Test
-	public void shouldReturn10Oct2015() {
-		Calendar expected = new GregorianCalendar(2015, 10, 10, 10, 15);
-		assertEquals(expected, testAttempt.getDate());
 	}
 }

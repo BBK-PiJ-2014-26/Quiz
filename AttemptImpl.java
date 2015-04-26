@@ -18,10 +18,10 @@ public class AttemptImpl implements Attempt, Serializable {
 	 */
 	Calendar date;
 	 
-	public AttemptImpl(String userName, int score, Calendar date) {
+	public AttemptImpl(String userName, int score) {
 	 	 this.userName = userName;
 	 	 this.score = score;
-	 	 this.date = date;
+	 	 this.date = Calendar.getInstance();
 	}
 	 
 	public String getUserName() {
