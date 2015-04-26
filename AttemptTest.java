@@ -5,6 +5,7 @@ import java.util.Calendar;
 
 /**
  * Tests the class AttemptImpl and the interface Attempt.
+ * @author Gareth Moore
  */
 public class AttemptTest {
 	
