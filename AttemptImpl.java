@@ -1,9 +1,10 @@
 import java.util.Calendar;
+import java.io.Serializable;
 
 /**
  * Implements the interface Attempt.
  */
-public class AttemptImpl implements Attempt {
+public class AttemptImpl implements Attempt, Serializable {
 	/**
 	 * The userName of the Player who attempted the quiz.
 	 */

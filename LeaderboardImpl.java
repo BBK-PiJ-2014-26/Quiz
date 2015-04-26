@@ -1,10 +1,11 @@
 import java.util.LinkedList;
+import java.io.Serializable;
 
 /**
  * Implements the interface Leaderboard.
  * Extends a LinkedList, but overrides the add method to ensure Attempts are organised by score.
  */
-public class LeaderboardImpl extends LinkedList<Attempt> implements Leaderboard {
+public class LeaderboardImpl extends LinkedList<Attempt> implements Leaderboard, Serializable {
 		
 	public LeaderboardImpl() {
 		super();
