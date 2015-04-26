@@ -35,9 +35,9 @@ public class QuizClientImpl implements QuizClient {
 			if (service.userNameExists(userName)) {
 				result = true;
 			}
-		//No action required for RemoteException,
+		//No action required for Exception,
 		//as result is initialised to false.
-		} catch (RemoteException e) {}
+		} catch (Exception e) {}
 		return result;
 	}
 	
@@ -50,9 +50,9 @@ public class QuizClientImpl implements QuizClient {
 				service.registerNewPlayer(userName);
 				result = true;
 			}
-		} catch (Exception e) {}
 		//If there is an exception, no action is required,
 		//because result has been initialised to false.
+		} catch (Exception e) {}
 		return result;
 	}
 	
@@ -90,7 +90,7 @@ public class QuizClientImpl implements QuizClient {
 			//Attempts to register a new Player.
 			//If registration fails, calls selectWelcomeOption().
 			if (!register(userName)) {
-				System.out.println("There was an error. Please try again.");
+				System.out.println("Username is taken. Please try again.");
 				selectWelcomeOption();
 			//If registration succeeds, the user proceeds.
 			} else {

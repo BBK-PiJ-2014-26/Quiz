@@ -39,7 +39,7 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
 	
 	public QuizServer() throws RemoteException {
 		super();
-		players = new TreeSet<Player>();
+		players = new TreeSet<Player>(new PlayerComparator());
 		quizzes = new LinkedList<Quiz>();
 		//Initialises the unique Id counter to 1.
 		quizIdCounter = 1;
