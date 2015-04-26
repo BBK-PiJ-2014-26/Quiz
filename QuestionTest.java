@@ -4,6 +4,7 @@ import org.junit.Before;
 
 /**
  * Tests the class QuestionImpl and the interface Question.
+ * @author Gareth Moore
  */
 public class QuestionTest {
 
@@ -19,46 +20,6 @@ public class QuestionTest {
 		String[] possibleAnswers = new String[] {"Constantinople", "Rome", "Odessa", "Ephesus"};
 		int correctAnswer = 1;
 		testQuestion = new QuestionImpl(question, possibleAnswers, correctAnswer);
-	}
-	
-	/**
-	 * Tests setOrder() and getOrder().
-	 * Should confirm that the correct order number is assigned to the Question.
-	 */
-	@Test
-	public void shouldSetOrderNumberAs1() {
-		testQuestion.setOrder(1);
-		assertEquals(1, testQuestion.getOrder());
-	}
-	
-	/**
-	 * Tests setOrder().
-	 * Should throw an exception if zero is the argument.
-	 */
-	@Test
-	public void shouldThrowExceptionWhenOrderIs0() {
-		boolean exceptionThrown = false;
-		try {
-			testQuestion.setOrder(0);
-		} catch (IllegalArgumentException e) {
-			exceptionThrown = true;
-		}
-		assertTrue(exceptionThrown);
-	}
-	
-	/**
-	 * Tests setOrder().
-	 * Should throw an exception if zero is thrown as an exception.
-	 */
-	@Test
-	public void shouldThrowExceptionWhenOrderIsNegative() {
-		boolean exceptionThrown = false;
-		try {
-			testQuestion.setOrder(-4);
-		} catch (IllegalArgumentException e) {
-			exceptionThrown = true;
-		}
-		assertTrue(exceptionThrown);
 	}
 	
 	/**
