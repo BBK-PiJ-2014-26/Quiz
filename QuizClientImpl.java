@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 /**
  * Implements the interface QuizClient.
+ * @author Gareth Moore
  */
 public class QuizClientImpl implements QuizClient {
 	/**

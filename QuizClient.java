@@ -1,5 +1,6 @@
 /**
  * A programme which allows a user to conect to a QuizService.
+ * @author Gareth Moore
  */
 public interface QuizClient {
 

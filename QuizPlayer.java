@@ -2,6 +2,7 @@ import java.rmi.RMISecurityManager;
 
 /**
  * Contains the main method to run a PlayerClient.
+ * @author Gareth Moore
  */
 public class QuizPlayer {
 	

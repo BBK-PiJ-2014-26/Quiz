@@ -16,6 +16,7 @@ import java.io.Serializable;
 
 /**
  * Implements the interface QuizService.
+ * @author Gareth Moore
  */
 public class QuizServer extends UnicastRemoteObject implements QuizService {
 	/**
