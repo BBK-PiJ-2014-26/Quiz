@@ -105,6 +105,9 @@ public class QuizClientImpl implements QuizClient {
 		}
 	}
 	
+	/**
+	 * No specific implementation. PlayerClient and SetupClient detail their respective implementations of this method.
+	 */
 	public void chooseOption(String userName) {
 	}
 	

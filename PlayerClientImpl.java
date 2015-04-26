@@ -48,7 +48,7 @@ public class PlayerClientImpl extends QuizClientImpl implements PlayerClient, Se
 	 * Offers users options to select a quiz or exit.
 	 */
 	private void selectQuizOptions(String userName) {
-		System.out.print("\nType 1 to play a quiz.\nType 2 to exit.\nSelection: ");
+		System.out.print("\nType 1 to play a quiz.\nType 2 to see top 3.\nType 3 to exit.\nSelection: ");
 		Scanner sc = new Scanner(System.in);
 		String selection = sc.next();
 		//If user has inputted 1, call requestQuizId().
@@ -61,8 +61,18 @@ public class PlayerClientImpl extends QuizClientImpl implements PlayerClient, Se
 				System.out.println("There was an error. Please try again.\n");
 				selectQuizOptions(userName);
 			}
-		//If user has inputted 2, exits application.
+		//If user has inputted 3, calls displayTop3().
 		} else if (selection.equals("2")) {
+			int quizId = requestQuizId();
+			try {
+				Leaderboard top3 = service.getTop3(quizId);
+				displayTop3(userName, top3);
+			} catch (Exception e) {
+				System.out.println("There was an error. Please try again.\n");
+				selectQuizOptions(userName);
+			}
+		//If user has inputted 3, exits application.
+		} else if (selection.equals("3")) {
 		//If none of the conditions have been fulfilled, calls selectQuizOptions().
 		} else { 
 			System.out.println("There was an error. Please try again.\n");
@@ -152,4 +162,11 @@ public class PlayerClientImpl extends QuizClientImpl implements PlayerClient, Se
 		System.out.println();
 		return index;
 	}
+	
+	public void displayTop3(String userName, Leaderboard top3) {
+		for (int i = 0; i < top3.size(); i++) {
+			Attempt temp = top3.get(i);
+			System.out.println("\n" + (i + 1) + ": " + temp.getUserName() + " " + temp.getScore());
+		}
+	}		
 }

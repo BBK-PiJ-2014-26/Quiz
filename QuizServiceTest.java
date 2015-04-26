@@ -6,11 +6,12 @@ import org.junit.Before;
 import org.junit.After;
 import java.util.List;
 import java.util.LinkedList;
-import java.util.GregorianCalendar;
+import java.io.File;
 
 /**
-* Tests the interface QuizService and the class QuizServer.
-*/
+ * Tests the interface QuizService and the class QuizServer.
+ * BEWARE, the files player.data, quiizzes.data and quizCounter.data will be before and after these tests.
+ */
 public class QuizServiceTest {
 
 	//A QuizService object for use in the following tests.
@@ -24,6 +25,13 @@ public class QuizServiceTest {
 	@Before
 	public void buildUp() {
 		try {
+			//Deletes player.data, quiizzes.data and quizCounter.data after each test.
+			File player = new File("./players.data");
+			File quiz = new File("./quizzes.data");
+			File quizCounter = new File("./quizIdCounter.data");
+			player.delete();
+			quiz.delete();
+			quizCounter.delete();
 			testService = new QuizServer();
 			testService.registerNewPlayer("Justinian");
 			testService.registerNewPlayer("Valens");
@@ -38,9 +46,18 @@ public class QuizServiceTest {
 		} catch (Exception e) {}
 	}
 	
-	@After
+	/**
+	 * Deletes player.data, quiizzes.data and quizCounter.data after each test.
+	 */
 	public void cleanUp() {
-		testService = null;
+		try {
+			File player = new File("./players.data");
+			File quiz = new File("./quizzes.data");
+			File quizCounter = new File("./quizIdCounter.data");
+			player.delete();
+			quiz.delete();
+			quizCounter.delete();
+		} catch (Exception e) {}
 	}
 	
 	/**
@@ -203,7 +220,7 @@ public class QuizServiceTest {
 	public void shouldReturnAQuizListOfSize1() {
 		try {
 			List<Quiz> temp = testService.getAllActiveQuizzes();
-			assertTrue(temp.size() == 1);
+			assertEquals(1, temp.size());
 		} catch (Exception e) {}
 	}
 	
@@ -349,5 +366,71 @@ public class QuizServiceTest {
 		} catch (RemoteException e) {}
 		assertEquals(8, actual.getScore());
 		assertEquals("Theodora", actual.getUserName());
+	}
+	
+	/**
+	 * Tests getTop3().
+	 *
+	 * Should throw exception when supplied quizId is 20 which doesn't exist.
+	 */
+	@Test (expected = IllegalArgumentException.class)
+	public void shouldThrowExceptionBecause12DoesntExist() {
+		try{
+			testService.getTop3(12);
+		} catch (RemoteException e) {}
+	}
+	
+	/**
+	 * Tests getTop3().
+	 *
+	 * Should return list of size 1 when there is only 1 Attempt.
+	 */
+	@Test
+	public void shouldReturnLeaderboardOfSize1() {
+		try{
+			testService.addNewAttempt(new AttemptImpl("Theodora", 2), 1);
+			Leaderboard actual = testService.getTop3(1);
+			assertEquals(1, actual.size());
+		} catch (Exception e) {}
+	}
+	
+	/**
+	 * Tests getTop3().
+	 *
+	 * Should return list of size 2 when there are only 2 Attempts.
+	 */
+	@Test
+	public void shouldReturnLeaderboardOfSize2() {
+		try{
+			testService.addNewAttempt(new AttemptImpl("Theodora", 2), 1);
+			testService.addNewAttempt(new AttemptImpl("Basil", 13), 1);
+			Leaderboard actual = testService.getTop3(1);
+			assertEquals(2, actual.size());
+		} catch (Exception e) {}
+	}
+	
+	/**
+	 * Tests getTop3().
+	 *
+	 * Adds 5 attempts to quiz 1. 
+	 * Then, asserts that a getTop3 call return a leaderboard containing 3 Attempts 
+	 * and that the Attempts are sorted highest to lowest.
+	 */
+	@Test
+	public void shouldShowGetTopWorksCorrectly() {
+		try {
+			testService.addNewAttempt(new AttemptImpl("Theodora", 8), 1);
+			testService.addNewAttempt(new AttemptImpl("Theodora", 11), 1);
+			testService.addNewAttempt(new AttemptImpl("Basil", 13), 1);
+			testService.addNewAttempt(new AttemptImpl("Theodora", 1), 1);
+			testService.addNewAttempt(new AttemptImpl("Theodora", 2), 1);
+			Leaderboard actual = testService.getTop3(1);
+			assertEquals(3, actual.size());
+			for (int i = 0; i < 2; i++) {
+				Attempt a = actual.get(i);
+				Attempt b = actual.get(i + 1);
+				assertTrue(a.getScore() > b.getScore());
+			}
+		} catch (Exception e) {}
 	}
 }

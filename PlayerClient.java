@@ -21,4 +21,12 @@ public interface PlayerClient extends QuizClient {
 	 * @param quizId of the Quiz to be played.
 	 */
 	void playQuiz(List<Question> questions, String userName, int quizId);
+	
+	/**
+	 * Displays the Top 3 scores of a requested Quiz.
+	 *
+	 * @param userName of the the Player.
+	 * @param top3 Attempts at the requested quiz.
+	 */
+	void displayTop3(String userName, Leaderboard top3);
 }

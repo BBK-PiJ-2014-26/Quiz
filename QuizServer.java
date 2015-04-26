@@ -399,4 +399,25 @@ public class QuizServer extends UnicastRemoteObject implements QuizService {
 			}
 		}
 	}
+	
+	public Leaderboard getTop3(int quizId) throws RemoteException, IllegalArgumentException {
+		//Checks that quizId exists.
+		//If false throws an exception.
+		if (!quizIdExists(quizId)) {
+			throw new IllegalArgumentException();
+		} else {
+			Leaderboard result = new LeaderboardImpl();
+			Quiz quiz = getQuiz(quizId);
+			Leaderboard lb = quiz.getLeaderboard();
+			int size = lb.size();
+			//If the size of the leaderboard is greater than 3, size is set to back to 3.
+			if (size > 3) {
+				size = 3;
+			}
+			for (int i = 0; i < size; i++) {
+				result.add(lb.get(i));
+			}
+			return result;
+		}
+	}
 }

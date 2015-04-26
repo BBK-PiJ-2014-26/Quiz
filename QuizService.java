@@ -100,4 +100,13 @@ public interface QuizService extends Remote {
 	 */
 	Attempt getWinner(int quizId) throws RemoteException, IllegalArgumentException;
 
+	/**
+	 * Returns the Top 3 of a requested quiz. 
+	 * If there are less than 3 Attempts, a Leaderboard of appropriate size is returned.
+	 *
+	 * @param quizId of the requested Quiz.
+	 * @throws IllegalArgumentException if the quizId does not exist.
+	 * @return Leaderboad containing top 3 scores.
+	 */
+	Leaderboard getTop3(int quizId) throws RemoteException, IllegalArgumentException;
 }
