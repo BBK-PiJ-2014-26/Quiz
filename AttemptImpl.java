@@ -3,6 +3,7 @@ import java.io.Serializable;
 
 /**
  * Implements the interface Attempt.
+ * @author Gareth Moore
  */
 public class AttemptImpl implements Attempt, Serializable {
 	/**

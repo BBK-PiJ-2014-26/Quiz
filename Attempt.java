@@ -5,6 +5,7 @@ import java.util.Calendar;
  *
  * QuizIds are not explicity recorded because the identity of the Quiz is implicit.
  * Attempts are recorded within a List which is an instance variable of each Quiz object.
+ * @author Gareth Moore
  */
 public interface Attempt {
 	
