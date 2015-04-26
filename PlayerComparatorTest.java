@@ -4,6 +4,7 @@ import org.junit.Before;
 
 /**
  * Tests PlayerComparator.
+ * @author Gareth Moore
  */
 public class PlayerComparatorTest {
 	
