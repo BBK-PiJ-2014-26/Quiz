@@ -4,6 +4,7 @@ import java.util.List;
 
 /**
  * Implements the interface SetupClient and extends QuizClientImpl.
+ * @author Gareth Moore
  */
 public class SetupClientImpl extends QuizClientImpl implements SetupClient {
 	

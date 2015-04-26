@@ -3,6 +3,7 @@
  * Extends the interface QuizClient.
  *
  * In addition, a user can terminate an active quiz and register as a new user.
+ * @author Gareth Moore
  */
 public interface SetupClient extends QuizClient {
 	
