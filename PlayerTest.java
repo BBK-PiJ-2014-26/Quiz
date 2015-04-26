@@ -3,6 +3,7 @@ import static org.junit.Assert.*;
 
 /**
  * Tests the clas PlayerImpl and the interface Player.
+ * @author Gareth Moore
  */
 public class PlayerTest {
 	
