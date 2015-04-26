@@ -37,8 +37,19 @@ public class SetupClientImpl extends QuizClientImpl implements SetupClient {
 	public void setupNewQuiz(String userName) {
 		System.out.print("Please enter the name of your quiz: ");
 		Scanner sc = new Scanner(System.in);
-		String name = sc.next();
-		List<Question> questions = requestQuestion();
+		String name = sc.nextLine();
+		List<Question> questions = new LinkedList<Question>();
+		boolean finished = false;
+		while (!finished) {
+			questions.add(requestQuestion());
+			System.out.print("Type y if you wish to add another question, type anything else if not: ");
+			sc = new Scanner(System.in);
+			String answer = sc.next();
+			if (!answer.equals("y")) {
+				finished = true;
+			}
+		}
+		System.out.println();
 		Quiz quiz = new QuizImpl(questions, userName, name);
 		try { 
 			int quizId = service.addNewQuiz(quiz);
@@ -46,19 +57,19 @@ public class SetupClientImpl extends QuizClientImpl implements SetupClient {
 		} catch (Exception e) {
 			System.out.println("There was an error. Please try again.");
 		}
-		chooseOption(userName);
 	}
 	
 	/**
-	 * Is called recursively until the user terminates.
+	 * Request a Question object the Player.
 	 *
 	 * @param questions is the list of Question to which the new Question is to be added.
+	 * @return a Question object.
 	 */
-	private List<Question> requestQuestion() {
-		List<Question> result = new LinkedList<Question>();
+	private Question requestQuestion() {
+		Question result = null;
 		System.out.print("Please enter the text of your question: ");
 		Scanner sc = new Scanner(System.in);
-		String question = sc.next();
+		String question = sc.nextLine();
 		String[] possibleAnswers = new String[4];
 		//Initialises correctAnswer to 10 because this is not a valid answer.
 		//Should therefore not interfere with user input.
@@ -71,22 +82,14 @@ public class SetupClientImpl extends QuizClientImpl implements SetupClient {
 			if (correctAnswer < 0 || correctAnswer > 3) {
 				System.out.print("Type y if this is the correct answer, type anything else if not: ");
 				sc = new Scanner(System.in);
-				String answer = sc.next();					
+				String answer = sc.nextLine();					
 				//If the user answers y , correct answer is set to the index of the array possibleAnswers.
 				if (answer.equals("y")) {
 					correctAnswer = i;
 				}
 			}
 		}
-		result.add(new QuestionImpl(question, possibleAnswers, correctAnswer));
-		System.out.print("Type y if you wish to add another question, type anything else if not: ");
-		sc = new Scanner(System.in);
-		String answer = sc.next();
-		//If the user answers y , requestQuestion is called again.
-		if (answer.equals("y")) {
-			result = requestQuestion();
-		}
-		System.out.println();
+		result = new QuestionImpl(question, possibleAnswers, correctAnswer);
 		return result;
 	}
 	
@@ -102,6 +105,9 @@ public class SetupClientImpl extends QuizClientImpl implements SetupClient {
 				terminateQuiz(userName);
 			} else {	
 				service.terminateQuiz(userName, quizId);
+				Attempt winner = service.getWinner(quizId);
+				System.out.println("The winner is " + winner.getUserName() + " with a score of "
+					+ winner.getScore() + "."\n);
 			}
 		} catch (Exception e) {
 			//If an exception occurs, calls chooseOption().

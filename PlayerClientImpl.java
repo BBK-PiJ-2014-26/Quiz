@@ -1,6 +1,8 @@
 import java.util.List;
 import java.util.ListIterator;
+import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.Calendar;
 
 /**
  * Implements the interface PlayerClient.
@@ -17,8 +19,7 @@ public class PlayerClientImpl extends QuizClientImpl implements PlayerClient {
 	}
 	
 	public void selectQuiz(String userName) {
-		System.out.println("Currently active quizzes:\n\n");
-		List<Quiz> quizzes = null;
+		List<Quiz> quizzes = new LinkedList<Quiz>();;
 		try {
 			quizzes = service.getAllActiveQuizzes();
 		} catch (Exception e) {
@@ -29,13 +30,14 @@ public class PlayerClientImpl extends QuizClientImpl implements PlayerClient {
 		if (quizzes.isEmpty()) {
 			System.out.println("There are no active quizzes.\nPlease come back later.");
 		} else {
+			System.out.println("\nCurrently active quizzes:\n");
 			//If not empty, prints the details of active quizzes.
-			System.out.println("Quiz ID\tQuiz Name");
+			System.out.println("Quiz ID\t\tQuiz Name");
 			//Creates an iterator so the programme can print the details of each quiz.
 			ListIterator<Quiz> iterator = quizzes.listIterator();
 			while (iterator.hasNext()) {
 				Quiz temp = iterator.next();
-				System.out.println(temp.getQuizId() + "\t" + temp.getName());
+				System.out.println(temp.getQuizId() + "\t\t" + temp.getName());
 			}
 			selectQuizOptions(userName);
 		}
@@ -45,7 +47,7 @@ public class PlayerClientImpl extends QuizClientImpl implements PlayerClient {
 	 * Offers users options to select a quiz or exit.
 	 */
 	private void selectQuizOptions(String userName) {
-		System.out.println("\nType 1 to play a quiz.\nType 2 to exit.\nSelection: ");
+		System.out.print("\nType 1 to play a quiz.\nType 2 to exit.\nSelection: ");
 		Scanner sc = new Scanner(System.in);
 		String selection = sc.next();
 		//If user has inputted 1, call requestQuizId().
@@ -80,6 +82,7 @@ public class PlayerClientImpl extends QuizClientImpl implements PlayerClient {
 		//Tests if the user input contains an int.
 		if (sc.hasNextInt()) {
 			quizId = sc.nextInt();
+			System.out.println();
 		//If user input does not contain an int,
 		//prints error, then calls requestQuizId() again.
 		} else {
@@ -114,6 +117,7 @@ public class PlayerClientImpl extends QuizClientImpl implements PlayerClient {
 			System.out.println("There was an error. Please try again.\n");
 			selectQuizOptions(userName);
 		}
+		System.out.println("You scored " + score + ".");
 	}
 	
 	/**
@@ -143,6 +147,7 @@ public class PlayerClientImpl extends QuizClientImpl implements PlayerClient {
 			System.out.println("Invalid answer, please try again.");
 			index = requestAnswer();
 		}
+		System.out.println();
 		return index;
 	}
 }
